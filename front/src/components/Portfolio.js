@@ -13,11 +13,11 @@ const Portfolio = () => {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const { fetchUser, fetchError, fetchLoading, user } = useSelector(
+  const { fetchUser, fetchError, loading, user } = useSelector(
     ({ profile, loading, user }) => ({
       fetchUser: profile.user,
       fetchError: profile.error,
-      fetchLoading: loading['profile/GET_USER'],
+      loading: loading['profile/GET_USER'],
       user: user.user,
     }),
   );
@@ -37,7 +37,7 @@ const Portfolio = () => {
     }
   }, [user, navigate, params.userId, dispatch]);
 
-  if (fetchLoading) {
+  if (loading) {
     return 'loading...';
   }
 
@@ -49,7 +49,7 @@ const Portfolio = () => {
     <Container fluid>
       <Row>
         <Col md="3" lg="3">
-          {!fetchLoading && fetchUser && (
+          {!loading && fetchUser && user && (
             <User
               portfolioOwnerId={fetchUser.id}
               isEditable={fetchUser.id === user?.id}

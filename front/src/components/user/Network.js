@@ -40,6 +40,10 @@ function Network() {
     return <ErrorMessage>{error}</ErrorMessage>;
   }
 
+  if (loading) {
+    return 'loading...';
+  }
+
   return (
     <Container fluid>
       <Row xs="auto" className="jusify-content-center">

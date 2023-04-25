@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 
 // prettier-ignore
 import { 
@@ -12,6 +12,15 @@ const initialState = {
   user: null,
   error: null,
 };
+
+const INITIALIZE = 'profile/INITIALIZE';
+const INITWITHTOKENPROFILE = 'profile/INITWITHTOKENPROFILE';
+
+export const initProfile = createAction(INITIALIZE);
+export const initWithTokenProfile = createAction(
+  INITWITHTOKENPROFILE,
+  (user) => user,
+);
 
 const profile = handleActions(
   {
@@ -32,6 +41,12 @@ const profile = handleActions(
     [UPDATE_USER_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
+    }),
+    [INITIALIZE]: () => initialState,
+    [INITWITHTOKENPROFILE]: (state, { payload: user }) => ({
+      ...state,
+      user,
+      error: null,
     }),
   },
   initialState,

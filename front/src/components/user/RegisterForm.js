@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react';
 import { Container, Col, Row, Form, Button } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -10,6 +11,7 @@ import {
 } from 'lib/util/validate';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from 'modules/sagas/auth';
+import { initAuth } from 'modules/reducers/auth';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -21,9 +23,10 @@ const RegisterForm = () => {
   const [confirmPassword, onChangeConfirmPassword] = useInput('');
   const [name, onChangeName] = useInput('');
 
-  const { user, authError } = useSelector(({ auth }) => ({
+  const { user, authError, loading } = useSelector(({ auth, loading }) => ({
     user: auth.auth,
     authError: auth.authError,
+    loading: loading['auth/REGISTER'],
   }));
 
   const isEmailValid = validateEmail(email);
@@ -40,6 +43,10 @@ const RegisterForm = () => {
   };
 
   useEffect(() => {
+    dispatch(initAuth());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (authError) {
       setError('회원가입 실패');
     }
@@ -47,9 +54,13 @@ const RegisterForm = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/login');
     }
   }, [user, navigate]);
+
+  if (loading) {
+    return 'loading...';
+  }
 
   return (
     <Container>

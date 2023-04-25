@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +10,13 @@ import UserCard from './UserCard';
 
 const User = ({ portfolioOwnerId, isEditable }) => {
   const dispatch = useDispatch();
-  const { fetchUser, fetchError } = useSelector(({ profile }) => ({
-    fetchUser: profile.user,
-    fetchError: profile.error,
-  }));
+  const { fetchUser, fetchError, loading } = useSelector(
+    ({ profile, loading }) => ({
+      fetchUser: profile.user,
+      fetchError: profile.error,
+      loading: loading['profile/GET_USER'],
+    }),
+  );
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -32,6 +36,10 @@ const User = ({ portfolioOwnerId, isEditable }) => {
       setUser(fetchUser);
     }
   }, [fetchUser]);
+
+  if (loading) {
+    return 'loading...';
+  }
 
   if (error) {
     return <ErrorMessage>{error}</ErrorMessage>;

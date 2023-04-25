@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable import/no-duplicates */
-import { handleActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 import { REGISTER_SUCCESS, REGISTER_FAILURE } from '../sagas/auth';
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from '../sagas/auth';
 
@@ -8,6 +8,15 @@ const initialState = {
   auth: null,
   authError: null,
 };
+
+const INITIALIZE = 'auth/INITIALIZE';
+const INITWITHTOKENAUTH = 'auth/INITWITHTOKEN';
+
+export const initAuth = createAction(INITIALIZE);
+export const initWithTokenAuth = createAction(
+  INITWITHTOKENAUTH,
+  (user) => user,
+);
 
 const auth = handleActions(
   {
@@ -28,6 +37,12 @@ const auth = handleActions(
     [REGISTER_FAILURE]: (state, { payload: error }) => ({
       ...state,
       authError: error,
+    }),
+    [INITIALIZE]: () => initialState,
+    [INITWITHTOKENAUTH]: (state, { payload: auth }) => ({
+      ...state,
+      auth,
+      authError: null,
     }),
   },
   initialState,

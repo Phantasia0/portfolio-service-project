@@ -4,6 +4,8 @@ import Nav from 'react-bootstrap/Nav';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'modules/reducers/user';
+import { initAuth } from 'modules/reducers/auth';
+import { initProfile } from 'modules/reducers/profile';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ const Header = () => {
   const onClick = () => {
     sessionStorage.removeItem('userToken');
     dispatch(logout());
+    dispatch(initAuth());
+    dispatch(initProfile());
     navigate('/');
   };
 

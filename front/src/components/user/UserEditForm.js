@@ -1,7 +1,8 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useInput from 'hooks/useInput';
 import { updateUser } from 'modules/sagas/user';
 import styled from 'styled-components';
@@ -12,6 +13,10 @@ const UserEditForm = ({ user, setIsEditing }) => {
   const [email, onChangeEmail] = useInput(user.email);
   const [description, onChangeDescription] = useInput(user.description);
   const [error, setError] = useState(null);
+
+  const { loading } = useSelector(({ loading }) => ({
+    loading: loading['user/UPDATE_USER'],
+  }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,6 +35,10 @@ const UserEditForm = ({ user, setIsEditing }) => {
 
     setIsEditing(false);
   };
+
+  if (loading) {
+    return 'loading...';
+  }
 
   return (
     <Card className="mb-2">

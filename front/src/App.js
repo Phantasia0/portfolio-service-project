@@ -2,6 +2,8 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { getCurrentUser } from 'modules/sagas/auth';
+import { initWithTokenAuth } from 'modules/reducers/auth';
+import { initWithTokenProfile } from 'modules/reducers/profile';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { PortfolioPage, LoginPage, RegisterPage, NetworkPage } from './pages';
@@ -28,9 +30,11 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
+      dispatch(initWithTokenAuth(user));
+      dispatch(initWithTokenProfile(user));
       console.log('%c sessionStorage에 토큰 있음.', 'color: #d93d1a;');
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   if (loading) {
     return 'loading...';
