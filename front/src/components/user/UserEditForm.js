@@ -41,51 +41,58 @@ const UserEditForm = ({ user, setIsEditing }) => {
   }
 
   return (
-    <Card className="mb-2">
-      <Card.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="useEditName" className="mb-3">
-            <Form.Control
-              type="text"
-              placeholder="이름"
-              value={name}
-              onChange={onChangeName}
-            />
-          </Form.Group>
+    <div>
+      {!loading && (
+        <Card className="mb-2">
+          <Card.Body>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="useEditName" className="mb-3">
+                <Form.Control
+                  type="text"
+                  placeholder="이름"
+                  value={name}
+                  onChange={onChangeName}
+                />
+              </Form.Group>
 
-          <Form.Group controlId="userEditEmail" className="mb-3">
-            <Form.Control
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={onChangeEmail}
-            />
-          </Form.Group>
+              <Form.Group controlId="userEditEmail" className="mb-3">
+                <Form.Control
+                  type="email"
+                  placeholder="이메일"
+                  value={email}
+                  onChange={onChangeEmail}
+                />
+              </Form.Group>
 
-          <Form.Group controlId="userEditDescription">
-            <Form.Control
-              type="text"
-              placeholder="정보, 인사말"
-              value={description}
-              onChange={onChangeDescription}
-            />
-          </Form.Group>
+              <Form.Group controlId="userEditDescription">
+                <Form.Control
+                  type="text"
+                  placeholder="정보, 인사말"
+                  value={description}
+                  onChange={onChangeDescription}
+                />
+              </Form.Group>
 
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+              {error && <ErrorMessage>{error}</ErrorMessage>}
 
-          <Form.Group as={Row} className="mt-3 text-center">
-            <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
-                확인
-              </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
-                취소
-              </Button>
-            </Col>
-          </Form.Group>
-        </Form>
-      </Card.Body>
-    </Card>
+              <Form.Group as={Row} className="mt-3 text-center">
+                <Col sm={{ span: 20 }}>
+                  <Button variant="primary" type="submit" className="me-3">
+                    확인
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setIsEditing(false)}
+                  >
+                    취소
+                  </Button>
+                </Col>
+              </Form.Group>
+            </Form>
+          </Card.Body>
+        </Card>
+      )}
+    </div>
   );
 };
 

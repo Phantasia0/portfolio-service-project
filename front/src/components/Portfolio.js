@@ -42,27 +42,31 @@ const Portfolio = () => {
   }
 
   if (fetchError) {
-    return <ErrorMessage>{fetchError}</ErrorMessage>;
+    return <ErrorMessage>에러발생</ErrorMessage>;
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
-          {!loading && fetchUser && user && (
-            <User
-              portfolioOwnerId={fetchUser.id}
-              isEditable={fetchUser.id === user?.id}
-            />
-          )}
-        </Col>
-        <Col>
-          <div style={{ textAlign: 'center' }}>
-            학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      {!loading && (
+        <Container fluid>
+          <Row>
+            <Col md="3" lg="3">
+              {!loading && fetchUser && user && (
+                <User
+                  portfolioOwnerId={fetchUser.id}
+                  isEditable={fetchUser.id === user?.id}
+                />
+              )}
+            </Col>
+            <Col>
+              <div style={{ textAlign: 'center' }}>
+                학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      )}
+    </div>
   );
 };
 

@@ -37,7 +37,7 @@ function Network() {
   }, [errorUsers]);
 
   if (error) {
-    return <ErrorMessage>{error}</ErrorMessage>;
+    return <ErrorMessage>에러발생</ErrorMessage>;
   }
 
   if (loading) {
@@ -45,17 +45,21 @@ function Network() {
   }
 
   return (
-    <Container fluid>
-      <Row xs="auto" className="jusify-content-center">
-        {!loading && users && (
-          <div>
-            {users.map((user) => (
-              <UserCard key={user.id} user={user} isNetwork />
-            ))}{' '}
-          </div>
-        )}
-      </Row>
-    </Container>
+    <div>
+      {!loading && (
+        <Container fluid>
+          <Row xs="auto" className="jusify-content-center">
+            {!loading && users && (
+              <div>
+                {users.map((user) => (
+                  <UserCard key={user.id} user={user} isNetwork />
+                ))}{' '}
+              </div>
+            )}
+          </Row>
+        </Container>
+      )}
+    </div>
   );
 }
 

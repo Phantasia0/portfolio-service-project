@@ -42,7 +42,7 @@ const User = ({ portfolioOwnerId, isEditable }) => {
   }
 
   if (error) {
-    return <ErrorMessage>{error}</ErrorMessage>;
+    return <ErrorMessage>User컴포넌트 에러 발생</ErrorMessage>;
   }
 
   if (isEditing) {
@@ -50,7 +50,15 @@ const User = ({ portfolioOwnerId, isEditable }) => {
   }
 
   return (
-    <UserCard user={user} setIsEditing={setIsEditing} isEditable={isEditable} />
+    <div>
+      {!loading && (
+        <UserCard
+          user={user}
+          setIsEditing={setIsEditing}
+          isEditable={isEditable}
+        />
+      )}
+    </div>
   );
 };
 
