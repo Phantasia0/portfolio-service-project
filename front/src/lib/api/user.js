@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import * as API from './api';
 
+// user API
 export const register = ({ email, password, name }) =>
   API.post('user/register', { email, password, name });
 
