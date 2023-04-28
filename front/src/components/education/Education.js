@@ -67,7 +67,11 @@ const Education = ({ isEditable, portfolioOwnerId }) => {
             </Card.Text>
 
             <ButtonWrapper>
-              {isEditable && <Button onClick={onClick}>+</Button>}
+              {isEditable && (
+                <Button col="6" onClick={onClick} style={{ opacity: '0.5' }}>
+                  +
+                </Button>
+              )}
             </ButtonWrapper>
 
             <Card.Text>
@@ -89,6 +93,6 @@ export default Education;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   margin: 12px 0;
 `;

@@ -51,13 +51,13 @@ const Portfolio = () => {
       {!loading && fetchUser && user && (
         <Container fluid>
           <Row>
-            <Col md="3" lg="3">
+            <Col md="auto" lg="auto">
               <User
                 portfolioOwnerId={fetchUser.id}
                 isEditable={fetchUser.id === user?.id}
               />
             </Col>
-            <Col>
+            <Col col="9">
               <Education
                 portfolioOwnerId={fetchUser.id}
                 isEditable={fetchUser.id === user?.id}
