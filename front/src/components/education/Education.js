@@ -68,7 +68,7 @@ const Education = ({ isEditable, portfolioOwnerId }) => {
 
             <ButtonWrapper>
               {isEditable && (
-                <Button onClick={onClick} style={{ opacity: '0.5' }}>
+                <Button col="6" onClick={onClick} style={{ opacity: '0.5' }}>
                   +
                 </Button>
               )}
@@ -93,6 +93,6 @@ export default Education;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   margin: 12px 0;
 `;

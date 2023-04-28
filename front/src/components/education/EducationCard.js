@@ -12,9 +12,9 @@ const EducationCard = ({ educationData, isEditable, setIsEditing }) => {
   return (
     <Container style={{ margin: '12px 0px' }}>
       <Row>
-        <Col sm="8">
+        <Col sm="6">
           <Row>
-            <Col sm="1" style={{ padding: '0', margin: '0', color: 'blue' }}>
+            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
               학교명 |
             </Col>
             <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
@@ -22,7 +22,7 @@ const EducationCard = ({ educationData, isEditable, setIsEditing }) => {
             </Col>
           </Row>
           <Row>
-            <Col sm="1" style={{ padding: '0', margin: '0', color: 'blue' }}>
+            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
               전공명 |
             </Col>
             <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
