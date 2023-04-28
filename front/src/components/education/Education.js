@@ -67,7 +67,11 @@ const Education = ({ isEditable, portfolioOwnerId }) => {
             </Card.Text>
 
             <ButtonWrapper>
-              {isEditable && <Button onClick={onClick}>+</Button>}
+              {isEditable && (
+                <Button onClick={onClick} style={{ opacity: '0.5' }}>
+                  +
+                </Button>
+              )}
             </ButtonWrapper>
 
             <Card.Text>
