@@ -7,7 +7,6 @@ import { getUser } from 'modules/sagas/user';
 import styled from 'styled-components';
 
 import User from './user/User';
-import Education from './education/Education';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -48,20 +47,21 @@ const Portfolio = () => {
 
   return (
     <div>
-      {!loading && fetchUser && user && (
+      {!loading && (
         <Container fluid>
           <Row>
             <Col md="3" lg="3">
-              <User
-                portfolioOwnerId={fetchUser.id}
-                isEditable={fetchUser.id === user?.id}
-              />
+              {!loading && fetchUser && user && (
+                <User
+                  portfolioOwnerId={fetchUser.id}
+                  isEditable={fetchUser.id === user?.id}
+                />
+              )}
             </Col>
             <Col>
-              <Education
-                portfolioOwnerId={fetchUser.id}
-                isEditable={fetchUser.id === user?.id}
-              />
+              <div style={{ textAlign: 'center' }}>
+                학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
+              </div>
             </Col>
           </Row>
         </Container>
