@@ -1,49 +1,57 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import useInput from 'hooks/useInput';
 
-const EducationAddForm = ({ portfolioOwnerId, setIsVisible }) => {
+import { useDispatch } from 'react-redux';
+import { addEducation } from 'modules/sagas/education';
+
+const EducationAddForm = ({ setVisible, portfolioOwnerId }) => {
+  const dispatch = useDispatch();
+
   const [school, onChangeSchool] = useInput('');
   const [major, onChangeMajor] = useInput('');
   const [status, onChangeStatus] = useInput('');
 
+  const onClick = () => {
+    setVisible(false);
+  };
   const onSubmitForm = (e) => {
     e.preventDefault();
+    const newEducationData = {
+      userId: portfolioOwnerId,
+      school,
+      major,
+      status,
+    };
 
-    const newEducationData = { school, major, status };
+    // 백앤드와 협의
+    // CREATE API Dispatch [POST 타입]
+    // portfolioOwnerId 필요함
+    // 하지만 백엔드 완성 전 리덕스를 활용하여 faker 데이터들 테스트
+    dispatch(addEducation(newEducationData));
 
-    // API 호출을 맞춤
-    // GET인지? POST인지? PATCH 인지? PUT인지? DELETE인지?
-    // portfolioOwnerId 이 정보가 필요함 . 누구인지 특정하기 위함
-    // CREATE API [POST] 를 호출하는 액션을 발생시켜야함.
-    // 자세한 API 는 백엔드 소통
-
-    // 이후,
-    setIsVisible(false);
-  };
-
-  const onClick = () => {
-    setIsVisible(false);
+    setVisible(false);
   };
 
   return (
     <Form
       onSubmit={onSubmitForm}
-      controlId="formEducation"
-      style={{ marginLeft: '6px' }}
+      controlid="formEducation"
+      style={{ marginLeft: '0px' }}
     >
-      <Form.Group controlId="formSchool" style={{ marginBottom: '8px' }}>
+      <Form.Group controlid="formSchool" style={{ marginBottom: '12px' }}>
         <Form.Control
           type="text"
           placeholder="학교 이름을 입력해 주세요."
-          onChange={onChangeSchool}
           value={school}
+          onChange={onChangeSchool}
         />
       </Form.Group>
 
-      <Form.Group controlId="formMajor" style={{ marginBottom: '8px' }}>
+      <Form.Group controlid="formMajor" style={{ marginBottom: '12px' }}>
         <Form.Control
           type="text"
           placeholder="전공명을 입력해 주세요."
@@ -52,7 +60,7 @@ const EducationAddForm = ({ portfolioOwnerId, setIsVisible }) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formStatus" style={{ marginBottom: '8px' }}>
+      <Form.Group controlid="formStatus" style={{ marginBottom: '8px' }}>
         {['radio'].map((type) => (
           <div key={`inline-${type}`} className="mb-3">
             <Form.Check
@@ -70,7 +78,7 @@ const EducationAddForm = ({ portfolioOwnerId, setIsVisible }) => {
               name="group1"
               type={type}
               value="학사졸업"
-              id={`inline-${type}-1`}
+              id={`inline-${type}-2`}
               onChange={onChangeStatus}
             />
             <Form.Check
@@ -79,7 +87,7 @@ const EducationAddForm = ({ portfolioOwnerId, setIsVisible }) => {
               name="group1"
               type={type}
               value="석사졸업"
-              id={`inline-${type}-1`}
+              id={`inline-${type}-3`}
               onChange={onChangeStatus}
             />
             <Form.Check
@@ -88,7 +96,7 @@ const EducationAddForm = ({ portfolioOwnerId, setIsVisible }) => {
               name="group1"
               type={type}
               value="박사졸업"
-              id={`inline-${type}-1`}
+              id={`inline-${type}-4`}
               onChange={onChangeStatus}
             />
           </div>
@@ -96,10 +104,14 @@ const EducationAddForm = ({ portfolioOwnerId, setIsVisible }) => {
       </Form.Group>
 
       <ButtonWrapper>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" style={{ marginRight: '4px' }}>
           확인
         </Button>
-        <Button variant="primary" onClick={onClick}>
+        <Button
+          variant="secondary"
+          onClick={onClick}
+          style={{ marginLeft: '4px' }}
+        >
           취소
         </Button>
       </ButtonWrapper>

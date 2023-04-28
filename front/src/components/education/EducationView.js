@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+
 import EducationCard from './EducationCard';
 import EducationEditForm from './EducationEditForm';
 
@@ -16,8 +17,8 @@ const EducationView = ({ educationData, isEditable }) => {
       ) : (
         <EducationCard
           educationData={educationData}
-          setIsEditing={setIsEditing}
           isEditable={isEditable}
+          setIsEditing={setIsEditing}
         />
       )}
     </div>

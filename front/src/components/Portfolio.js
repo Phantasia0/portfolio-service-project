@@ -59,8 +59,8 @@ const Portfolio = () => {
             </Col>
             <Col>
               <Education
-                isEditable={fetchUser.id === user?.id}
                 portfolioOwnerId={fetchUser.id}
+                isEditable={fetchUser.id === user?.id}
               />
             </Col>
           </Row>

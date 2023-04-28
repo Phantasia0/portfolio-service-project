@@ -1,82 +1,94 @@
+/* eslint-disable no-shadow */
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { Button, Card } from 'react-bootstrap';
+import styled from 'styled-components';
 
-import EducationView from './EducationView';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadEducation } from 'modules/sagas/education';
+
+import Spinners from 'components/common/Spinners';
 import EducationAddForm from './EducationAddForm';
+import EducationView from './EducationView';
 
 const Education = ({ isEditable, portfolioOwnerId }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const dispatch = useDispatch();
+  const { educationDatas, error, loading } = useSelector(
+    ({ education, loading }) => ({
+      educationDatas: education.datas,
+      error: education.loadEducationError,
+      loading: loading['education/LOAD_EDUCATION'],
+      updateError: education.updateError,
+    }),
+  );
 
-  const dummyDatas = [
-    {
-      id: 1,
-      school: '초등학교',
-      major: '초등전공',
-      status: '상태',
-    },
-    {
-      id: 2,
-      school: '중학교',
-      major: '중전공',
-      status: '상태',
-    },
-    {
-      id: 3,
-      school: '고등학교',
-      major: '고등전공',
-      status: '상태',
-    },
-    {
-      id: 4,
-      school: '대학교',
-      major: '대전공',
-      status: '상태',
-    },
-    {
-      id: 5,
-      school: '대학원',
-      major: '대학전공',
-      status: '상태',
-    },
-  ];
-
-  useEffect(() => {
-    // API 통신을 통해 데이터를 데이터베이스로부터 받아와야함.
-    // portfolioOwnerId 필요함.
-    // Read API [GET] 를 호출할 수 있는 액션을 발생시켜야함.
-    // 지금은 백엔드 서버가 완성되지않았기 때문에
-    // 백앤드 팀으로 부터 데이터 테이블을 받아서
-    // 그것에 맞춰 faker 라이브러리를 활용하여 데이터를 테스트해봄
-  }, []);
+  const [isVisible, setVisible] = useState(false);
 
   const onClick = () => {
-    setIsVisible(true);
+    setVisible(true);
   };
 
+  useEffect(() => {
+    // 백앤드와 협의
+    // Read API Dispatch [GET 타입]
+    // portfolioOwnerId 필요함.
+    // 하지만 백엔드 완성 전 리덕스를 활용하여 faker 데이터들 테스트
+
+    dispatch(loadEducation(portfolioOwnerId));
+  }, [dispatch, portfolioOwnerId]);
+
+  if (loading) {
+    return <Spinners />;
+  }
+
+  if (error) {
+    return 'LOAD ERROR';
+  }
+
   return (
-    <Card>
-      <Card.Body>
-        <h1>학력</h1>
-        {dummyDatas.map((data) => (
-          <EducationView
-            key={data.id}
-            educationData={data}
-            isEditable={isEditable}
-          />
-        ))}
+    <div>
+      {!loading && (
+        <Card style={{ padding: '6px' }}>
+          <Card.Body>
+            <Card.Title style={{ fontSize: '1.5rem', fontWeight: '500' }}>
+              학력
+            </Card.Title>
+            <Card.Text>
+              {educationDatas
+                ?.filter((data) => data.userId === portfolioOwnerId)
+                .map((data) => (
+                  <EducationView
+                    key={data.id}
+                    educationData={data}
+                    isEditable={isEditable}
+                  />
+                ))}
+            </Card.Text>
 
-        {isEditable && <Button onClick={onClick}>+</Button>}
+            <ButtonWrapper>
+              {isEditable && <Button onClick={onClick}>+</Button>}
+            </ButtonWrapper>
 
-        {isVisible && (
-          <EducationAddForm
-            portfolioOwnerId={portfolioOwnerId}
-            setIsVisible={setIsVisible}
-          />
-        )}
-      </Card.Body>
-    </Card>
+            <Card.Text>
+              {isVisible && (
+                <EducationAddForm
+                  setVisible={setVisible}
+                  portfolioOwnerId={portfolioOwnerId}
+                />
+              )}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      )}
+    </div>
   );
 };
 
 export default Education;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+`;

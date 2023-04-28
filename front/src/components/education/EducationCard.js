@@ -1,20 +1,33 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Container, Col, Row } from 'react-bootstrap';
 
-const EducationCard = ({ educationData, setIsEditing, isEditable }) => {
+const EducationCard = ({ educationData, isEditable, setIsEditing }) => {
   const onClick = () => {
     setIsEditing(true);
   };
 
   return (
-    <div>
-      <div>{educationData.school}</div>
-      <div>{educationData.major}</div>
-      <div>{educationData.status}</div>
-      <br />
-      {isEditable && <Button onClick={onClick}>편집</Button>}
-    </div>
+    <Container style={{ margin: '12px 0px' }}>
+      <Row>
+        <Col sm="8">
+          <Row>{educationData.school}</Row>
+          <Row>
+            <p style={{ padding: '0', margin: '0' }}>
+              {educationData.major}({educationData.status})
+            </p>
+          </Row>
+        </Col>
+        <Col sm="2">
+          {isEditable && (
+            <Button variant="outline-primary" size="sm" onClick={onClick}>
+              편집
+            </Button>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

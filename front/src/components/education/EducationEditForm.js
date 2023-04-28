@@ -1,109 +1,148 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import styled from 'styled-components';
 import useInput from 'hooks/useInput';
+import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { updateEducation } from 'modules/sagas/education';
+import Modals from 'components/common/Modals';
 
 const EducationEditForm = ({ educationData, setIsEditing }) => {
+  const [modalShow, setModalShow] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const dispatch = useDispatch();
+
   const [school, onChangeSchool] = useInput(educationData.school);
   const [major, onChangeMajor] = useInput(educationData.major);
   const [status, onChangeStatus] = useInput(educationData.status);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-
-    const updatedEducationData = { school, major, status };
-
-    // API 호출을 맞춤
-    // GET인지? POST인지? PATCH 인지? PUT인지? DELETE인지?
-    // edcuationDataID 정보가 필요함 . 어떤 educationData인지?
-    // UPDATE API [PUT] 를 호출하는 액션을 발생시켜야함.
-    // 자세한 API 는 백엔드 소통
-
-    // 이후,
-    setIsEditing(false);
+    setModalShow(true);
   };
 
+  useEffect(() => {
+    if (isConfirmed) {
+      const { id } = educationData;
+      const updatedEducationData = { id, school, major, status };
+
+      // 백앤드와 협의
+      // Update API Dispatch [PATCH, PUT 타입]
+      // educationDataID 필요함
+      // 하지만 백엔드 완성 전 리덕스를 활용하여 faker 데이터들 테스트
+
+      dispatch(updateEducation(updatedEducationData));
+      console.log(updatedEducationData);
+
+      setIsEditing(false);
+    }
+  }, [
+    dispatch,
+    educationData,
+    isConfirmed,
+    major,
+    school,
+    setIsEditing,
+    status,
+  ]);
+
   const onClick = () => {
+    console.log(educationData);
     setIsEditing(false);
   };
 
   return (
-    <Form
-      onSubmit={onSubmitForm}
-      controlId="formEducation"
-      style={{ marginLeft: '6px' }}
-    >
-      <Form.Group controlId="formSchool" style={{ marginBottom: '8px' }}>
-        <Form.Control
-          type="text"
-          placeholder="학교 이름을 입력해 주세요."
-          onChange={onChangeSchool}
-          value={school}
-        />
-      </Form.Group>
+    <>
+      <Form
+        onSubmit={onSubmitForm}
+        controlid="formEducation"
+        style={{ margin: '24px 0 0 0' }}
+      >
+        <Form.Group controlid="formSchool" style={{ marginBottom: '12px' }}>
+          <Form.Control
+            type="text"
+            placeholder="학교 이름을 입력해 주세요."
+            value={school}
+            onChange={onChangeSchool}
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formMajor" style={{ marginBottom: '8px' }}>
-        <Form.Control
-          type="text"
-          placeholder="전공명을 입력해 주세요."
-          value={major}
-          onChange={onChangeMajor}
-        />
-      </Form.Group>
+        <Form.Group controlid="formMajor" style={{ marginBottom: '12px' }}>
+          <Form.Control
+            type="text"
+            placeholder="전공명을 입력해 주세요."
+            value={major}
+            onChange={onChangeMajor}
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formStatus" style={{ marginBottom: '8px' }}>
-        {['radio'].map((type) => (
-          <div key={`inline-${type}`} className="mb-3">
-            <Form.Check
-              inline
-              label="재학중"
-              name="group1"
-              type={type}
-              value="재학중"
-              id={`inline-${type}-1`}
-              onChange={onChangeStatus}
-            />
-            <Form.Check
-              inline
-              label="학사졸업"
-              name="group1"
-              type={type}
-              value="학사졸업"
-              id={`inline-${type}-1`}
-              onChange={onChangeStatus}
-            />
-            <Form.Check
-              inline
-              label="석사졸업"
-              name="group1"
-              type={type}
-              value="석사졸업"
-              id={`inline-${type}-1`}
-              onChange={onChangeStatus}
-            />
-            <Form.Check
-              inline
-              label="박사졸업"
-              name="group1"
-              type={type}
-              value="박사졸업"
-              id={`inline-${type}-1`}
-              onChange={onChangeStatus}
-            />
-          </div>
-        ))}
-      </Form.Group>
+        <Form.Group controlid="formStatus" style={{ marginBottom: '8px' }}>
+          {['radio'].map((type) => (
+            <div key={`inline-${type}-${educationData.id}`} className="mb-3">
+              <Form.Check
+                inline
+                label="재학중"
+                name="group1"
+                type={type}
+                value="재학중"
+                id={`inline-${type}-${educationData.id}-1`}
+                onChange={onChangeStatus}
+              />
+              <Form.Check
+                inline
+                label="학사졸업"
+                name="group1"
+                type={type}
+                value="학사졸업"
+                id={`inline-${type}-${educationData.id}-2`}
+                onChange={onChangeStatus}
+              />
+              <Form.Check
+                inline
+                label="석사졸업"
+                name="group1"
+                type={type}
+                value="석사졸업"
+                id={`inline-${type}-${educationData.id}-3`}
+                onChange={onChangeStatus}
+              />
+              <Form.Check
+                inline
+                label="박사졸업"
+                name="group1"
+                type={type}
+                value="박사졸업"
+                id={`inline-${type}-${educationData.id}-4`}
+                onChange={onChangeStatus}
+              />
+            </div>
+          ))}
+        </Form.Group>
 
-      <ButtonWrapper>
-        <Button variant="primary" type="submit">
-          확인
-        </Button>
-        <Button variant="primary" onClick={onClick}>
-          취소
-        </Button>
-      </ButtonWrapper>
-    </Form>
+        <ButtonWrapper>
+          <Button
+            variant="primary"
+            type="submit"
+            style={{ marginRight: '4px' }}
+          >
+            확인
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={onClick}
+            style={{ marginLeft: '4px' }}
+          >
+            취소
+          </Button>
+        </ButtonWrapper>
+      </Form>
+
+      <Modals
+        show={modalShow}
+        setModalShow={setModalShow}
+        setIsConfirmed={setIsConfirmed}
+      />
+    </>
   );
 };
 
