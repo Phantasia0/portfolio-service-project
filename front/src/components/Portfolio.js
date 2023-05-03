@@ -10,6 +10,7 @@ import User from './user/User';
 import Education from './education/Education';
 import Award from './award/Award';
 import Certificate from './certificate/Certificate';
+import Project from './project/Project';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -64,6 +65,10 @@ const Portfolio = () => {
                 isEditable={fetchUser.id === user?.id}
               />
               <Certificate
+                portfolioOwnerId={fetchUser.id}
+                isEditable={fetchUser.id === user?.id}
+              />
+              <Project
                 portfolioOwnerId={fetchUser.id}
                 isEditable={fetchUser.id === user?.id}
               />
