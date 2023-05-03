@@ -74,7 +74,7 @@ const EducationAddForm = ({ setVisible, portfolioOwnerId }) => {
             type="radio"
             value={status}
             id={`inline-${status}`}
-            onChange={(e) => onChangeStatus(e.target.value)}
+            onChange={onChangeStatus}
           />
         ))}
       </Form.Group>
