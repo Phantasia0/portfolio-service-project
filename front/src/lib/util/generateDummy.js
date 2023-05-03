@@ -32,3 +32,15 @@ export const generateDummyCertificate = (num,userId)=>Array(num).fill().map(()=>
   grade: faker.helpers.arrayElement(['기능사', '기술사','기사','산업기사','1종보통','2종보통']),
   acquireDate: faker.date.birthdate(),
 }));
+
+// prettier-ignore
+export const generateDummyProject = (num,userId)=>Array(num).fill().map(()=>({
+  userId,
+  id:shortId.generate(),
+  projectName: faker.helpers.arrayElement(['아두이노자동차만들기','자기소개포트폴리오']),
+  proejctLink: faker.helpers.arrayElement(['naver.com','google.com']),
+  introduction: faker.word(),
+  startDate: faker.date.birthdate(),
+  myRole : faker.word(),
+  detail: faker.word(),
+}));

@@ -42,3 +42,42 @@ export const addCertificate = ({ agency, credit, grade, acquireDate }) =>
 
 export const updateCertificate = ({ id, agency, credit, grade, acquireDate }) =>
   API.put(`certificates/${id}`, { agency, credit, grade, acquireDate });
+
+// project API
+export const getProjects = (portfolioOwnerId) =>
+  API.get('projects', portfolioOwnerId);
+
+export const addProejct = ({
+  projectName,
+  projectLink,
+  introduction,
+  startDate,
+  myRole,
+  detail,
+}) =>
+  API.post('projects/', {
+    projectName,
+    projectLink,
+    introduction,
+    startDate,
+    myRole,
+    detail,
+  });
+
+export const updateProject = ({
+  id,
+  projectName,
+  projectLink,
+  introduction,
+  startDate,
+  myRole,
+  detail,
+}) =>
+  API.put(`projects/${id}`, {
+    projectName,
+    projectLink,
+    introduction,
+    startDate,
+    myRole,
+    detail,
+  });
