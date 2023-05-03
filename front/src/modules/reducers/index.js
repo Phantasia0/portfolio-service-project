@@ -5,6 +5,7 @@ import auth from './auth';
 import profile from './profile';
 import users from './users';
 import education from './education';
+import award from './award';
 
 const rootReducer = combineReducers({
   loading,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   profile,
   users,
   education,
+  award,
 });
 
 export default rootReducer;

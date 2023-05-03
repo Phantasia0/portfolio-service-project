@@ -11,3 +11,14 @@ export const generateDummyEducation = (num,userId)=>Array(num).fill().map(()=>({
   major :  faker.helpers.arrayElement(['기계공학과','생명공학과','우주공학과','건축공학과', '수학교육과','소프트웨어학과','경영학과']),
   status: faker.helpers.arrayElement(['재학중','학사졸업','석사졸업','박사졸업'])
 }));
+
+// prettier-ignore
+export const generateDummyAward = (num,userId)=>Array(num).fill().map(()=>({
+  userId,
+  id:shortId.generate(),
+  association: faker.helpers.arrayElement(['엘리스','공작기계협회']),
+  contest :  faker.helpers.arrayElement(['제1회 공모전','제7회 프로젝트 대회']),
+  startDate : faker.date.birthdate(),
+  prize : faker.word(),
+  detail: faker.word(),
+}));

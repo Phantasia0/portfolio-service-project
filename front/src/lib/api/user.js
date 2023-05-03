@@ -16,3 +16,19 @@ export const getCurrentUser = () => API.get('user/current');
 
 export const updateUser = ({ id, name, email, description }) =>
   API.put(`users/${id}`, { name, email, description });
+
+// award API
+export const getAwards = (portfolioOwnerId) =>
+  API.get('awards', portfolioOwnerId);
+
+export const addAward = ({ association, contest, prize, detail, date }) =>
+  API.post('awards/', { association, contest, prize, detail, date });
+
+export const updateAward = ({
+  id,
+  association,
+  contest,
+  prize,
+  detail,
+  date,
+}) => API.put(`awards/${id}`, { association, contest, prize, detail, date });
