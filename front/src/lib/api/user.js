@@ -81,3 +81,21 @@ export const updateProject = ({
     myRole,
     detail,
   });
+
+// music API
+export const getMusicList = (portfolioOwnerId) =>
+  API.get('audio', portfolioOwnerId);
+export const getMusicCover = (coverID) => API.get('audio/cover', coverID);
+export const addMusicSong = (data) => {
+  const userId = data.get('userId');
+  const title = data.get('title');
+  const artist = data.get('artist');
+  const coverFile = data.get('coverFile');
+  const musicFile = data.get('musicFile');
+
+  return API.post(
+    `audio/${userId}`,
+    { userId, title, artist, coverFile, musicFile },
+    'Music',
+  );
+};
