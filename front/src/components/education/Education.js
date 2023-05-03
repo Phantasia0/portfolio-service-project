@@ -49,7 +49,7 @@ const Education = ({ isEditable, portfolioOwnerId }) => {
   return (
     <div>
       {!loading && (
-        <Card style={{ padding: '6px' }}>
+        <Card style={{ padding: '6px', marginBottom: '1.5rem' }}>
           <Card.Body>
             <Card.Title style={{ fontSize: '1.5rem', fontWeight: '500' }}>
               학력
