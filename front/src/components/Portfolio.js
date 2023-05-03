@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import User from './user/User';
 import Education from './education/Education';
 import Award from './award/Award';
+import Certificate from './certificate/Certificate';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -59,6 +60,10 @@ const Portfolio = () => {
                 isEditable={fetchUser.id === user?.id}
               />
               <Award
+                portfolioOwnerId={fetchUser.id}
+                isEditable={fetchUser.id === user?.id}
+              />
+              <Certificate
                 portfolioOwnerId={fetchUser.id}
                 isEditable={fetchUser.id === user?.id}
               />
