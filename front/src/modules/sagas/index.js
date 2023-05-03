@@ -4,6 +4,7 @@ import { userSaga } from './user';
 import { usersSaga } from './users';
 import { educationSaga } from './education';
 import { awardSaga } from './award';
+import { certificateSaga } from './certificate';
 
 function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ function* rootSaga() {
     fork(usersSaga),
     fork(educationSaga),
     fork(awardSaga),
+    fork(certificateSaga),
   ]);
 }
 
