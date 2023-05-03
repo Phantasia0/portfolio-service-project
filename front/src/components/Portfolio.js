@@ -13,6 +13,7 @@ import Certificate from './certificate/Certificate';
 import Project from './project/Project';
 import Music from './music/Music';
 import MusicPanel from './musicPanel/MusicPanel';
+import BackgroundCover from './BackgroundCover';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const Portfolio = () => {
 
   return (
     <div>
+      <BackgroundCover />
       {!loading && fetchUser && user && (
         <Container fluid>
           <Row>
