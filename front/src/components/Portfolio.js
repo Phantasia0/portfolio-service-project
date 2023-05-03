@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import User from './user/User';
 import Education from './education/Education';
+import Award from './award/Award';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -54,6 +55,10 @@ const Portfolio = () => {
             </Col>
             <Col col="9">
               <Education
+                portfolioOwnerId={fetchUser.id}
+                isEditable={fetchUser.id === user?.id}
+              />
+              <Award
                 portfolioOwnerId={fetchUser.id}
                 isEditable={fetchUser.id === user?.id}
               />
