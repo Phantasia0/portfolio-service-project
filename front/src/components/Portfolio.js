@@ -29,13 +29,8 @@ const Portfolio = () => {
       return;
     }
 
-    if (params.userId) {
-      const ownerId = params.userId;
-      dispatch(getUser(ownerId));
-    } else {
-      const ownerId = user.id;
-      dispatch(getUser(ownerId));
-    }
+    const ownerId = params.userId || user.id;
+    dispatch(getUser(ownerId));
   }, [user, navigate, params.userId, dispatch]);
 
   if (loading) {
