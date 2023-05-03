@@ -11,6 +11,8 @@ import Education from './education/Education';
 import Award from './award/Award';
 import Certificate from './certificate/Certificate';
 import Project from './project/Project';
+import Music from './music/Music';
+import MusicPanel from './musicPanel/MusicPanel';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -54,6 +56,7 @@ const Portfolio = () => {
                 portfolioOwnerId={fetchUser.id}
                 isEditable={fetchUser.id === user?.id}
               />
+              <Music portfolioOwnerId={fetchUser.id} />
             </Col>
             <Col col="9">
               <Education
@@ -69,6 +72,10 @@ const Portfolio = () => {
                 isEditable={fetchUser.id === user?.id}
               />
               <Project
+                portfolioOwnerId={fetchUser.id}
+                isEditable={fetchUser.id === user?.id}
+              />
+              <MusicPanel
                 portfolioOwnerId={fetchUser.id}
                 isEditable={fetchUser.id === user?.id}
               />
