@@ -32,3 +32,13 @@ export const updateAward = ({
   detail,
   date,
 }) => API.put(`awards/${id}`, { association, contest, prize, detail, date });
+
+// certificate API
+export const getCertificates = (portfolioOwnerId) =>
+  API.get('certificates', portfolioOwnerId);
+
+export const addCertificate = ({ agency, credit, grade, acquireDate }) =>
+  API.post('projects/', { agency, credit, grade, acquireDate });
+
+export const updateCertificate = ({ id, agency, credit, grade, acquireDate }) =>
+  API.put(`certificates/${id}`, { agency, credit, grade, acquireDate });
