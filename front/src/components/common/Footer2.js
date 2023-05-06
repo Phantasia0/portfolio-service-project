@@ -23,7 +23,7 @@ function SearchComponent() {
     try {
       const response = await axios.get('https://dapi.kakao.com/v2/search/web', {
         headers: {
-          Authorization: 'KakaoAK a15b67bc3958c3a502cf0d1905aa8e44',
+          Authorization: 'KakaoAK APIKEY',
         },
         params: {
           query: searchValue,
@@ -41,7 +41,7 @@ function SearchComponent() {
 
   return (
     <div>
-      <form onSubmit={onSubmit} style={{ margin:'0px' }}>
+      <form onSubmit={onSubmit} style={{ margin: '0px' }}>
         <Container style={{ padding: '4px' }}>
           <Row style={{ margin: '12px 0px', padding: '0 0 0 16px' }}>
             <Col sm="auto">
