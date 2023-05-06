@@ -2,7 +2,7 @@ import { all, fork, takeLatest } from 'redux-saga/effects';
 import { createAction } from 'redux-actions';
 
 import createType from 'lib/util/createType';
-// import createSaga from 'lib/util/createSaga';
+import createSaga from 'lib/util/createSaga';
 import createDummySaga from 'lib/util/createDummySaga';
 import { generateDummyCertificate } from 'lib/util/generateDummy';
 
@@ -33,6 +33,12 @@ export const [
   UPDATE_CERTIFICATE_FAILURE
 ] = createType('certificate/UPDATE_CERTIFICATE');
 
+export const [
+  DELETE_CERTIFICATE,
+  DELETE_CERTIFICATE_SUCCESS,
+  DELETE_CERTIFICATE_FAILURE,
+] = createType('certificate/DELETE_CERTIFICATE');
+
 /* 2. 액션 객체 생성 함수 */
 export const loadCertificate = createAction(LOAD_CERTIFICATE, (id) => id);
 export const addCertificate = createAction(ADD_CERTIFICATE, (data) => data);
@@ -40,18 +46,24 @@ export const updateCertificate = createAction(
   UPDATE_CERTIFICATE,
   (data) => data,
 );
+export const deleteCertificate = createAction(DELETE_CERTIFICATE, (id) => id);
 
 /* 3. 사가 함수 */
-const loadCertificateSaga = createDummySaga(
+const loadCertificateSaga = createSaga(
   LOAD_CERTIFICATE,
-  generateDummyCertificate,
-  'LOAD',
+  certificateAPI.getCertificates,
 );
-const addCertificateSaga = createDummySaga(ADD_CERTIFICATE, null, 'ADD');
-const updateCertificateSaga = createDummySaga(
+const addCertificateSaga = createSaga(
+  ADD_CERTIFICATE,
+  certificateAPI.addCertificate,
+);
+const updateCertificateSaga = createSaga(
   UPDATE_CERTIFICATE,
-  null,
-  'UPDATE',
+  certificateAPI.updateCertificate,
+);
+const deleteCertificateSaga = createSaga(
+  DELETE_CERTIFICATE,
+  certificateAPI.deleteCertificate,
 );
 
 /* 4. 와치 함수 */
@@ -67,10 +79,15 @@ function* watchUpdateCertificate() {
   yield takeLatest(UPDATE_CERTIFICATE, updateCertificateSaga);
 }
 
+function* watchDeleteCertificate() {
+  yield takeLatest(DELETE_CERTIFICATE, deleteCertificateSaga);
+}
+
 export function* certificateSaga() {
   yield all([
     fork(watchLoadCertificate),
     fork(watchAddCertificate),
     fork(watchUpdateCertificate),
+    fork(watchDeleteCertificate),
   ]);
 }

@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import * as API from './api';
+import client from './client';
 
 // user API
 export const register = ({ email, password, name }) =>
@@ -17,37 +18,78 @@ export const getCurrentUser = () => API.get('user/current');
 export const updateUser = ({ id, name, email, description }) =>
   API.put(`users/${id}`, { name, email, description });
 
+// education API
+export const getEducations = (portfolioOwnerId) =>
+  API.get('education', portfolioOwnerId);
+
+export const addEducation = ({ userId, school, major, status }) =>
+  API.post('education', { userId, school, major, status });
+
+export const updateEducation = ({ _id, school, major, status }) =>
+  API.put(`education/${_id}`, { school, major, status });
+
+export const deleteEducation = (_id) => API.del(`education/${_id}`);
+
 // award API
 export const getAwards = (portfolioOwnerId) =>
-  API.get('awards', portfolioOwnerId);
+  API.get('award', portfolioOwnerId);
 
-export const addAward = ({ association, contest, prize, detail, date }) =>
-  API.post('awards/', { association, contest, prize, detail, date });
-
-export const updateAward = ({
-  id,
+export const addAward = ({
+  userId,
   association,
   contest,
+  startDate,
   prize,
   detail,
-  date,
-}) => API.put(`awards/${id}`, { association, contest, prize, detail, date });
+}) =>
+  API.post('award', { userId, association, contest, startDate, prize, detail });
+
+export const updateAward = ({
+  _id,
+  association,
+  contest,
+  startDate,
+  prize,
+  detail,
+}) =>
+  API.put(`award/${_id}`, { association, contest, startDate, prize, detail });
+
+export const deleteAward = (_id) => API.del(`award/${_id}`);
 
 // certificate API
 export const getCertificates = (portfolioOwnerId) =>
-  API.get('certificates', portfolioOwnerId);
+  API.get('certificate', portfolioOwnerId);
 
-export const addCertificate = ({ agency, credit, grade, acquireDate }) =>
-  API.post('projects/', { agency, credit, grade, acquireDate });
+export const addCertificate = ({
+  userId,
+  agency,
+  credit,
+  grade,
+  acquireDate,
+}) => API.post('certificate', { userId, agency, credit, grade, acquireDate });
 
-export const updateCertificate = ({ id, agency, credit, grade, acquireDate }) =>
-  API.put(`certificates/${id}`, { agency, credit, grade, acquireDate });
+export const updateCertificate = ({
+  _id,
+  agency,
+  credit,
+  grade,
+  acquireDate,
+}) =>
+  API.put(`certificate/${_id}`, {
+    agency,
+    credit,
+    grade,
+    acquireDate,
+  });
+
+export const deleteCertificate = (_id) => API.del(`certificate/${_id}`);
 
 // project API
 export const getProjects = (portfolioOwnerId) =>
-  API.get('projects', portfolioOwnerId);
+  API.get('project', portfolioOwnerId);
 
-export const addProejct = ({
+export const addProject = ({
+  userId,
   projectName,
   projectLink,
   introduction,
@@ -55,7 +97,8 @@ export const addProejct = ({
   myRole,
   detail,
 }) =>
-  API.post('projects/', {
+  API.post('project', {
+    userId,
     projectName,
     projectLink,
     introduction,
@@ -65,7 +108,7 @@ export const addProejct = ({
   });
 
 export const updateProject = ({
-  id,
+  _id,
   projectName,
   projectLink,
   introduction,
@@ -73,7 +116,7 @@ export const updateProject = ({
   myRole,
   detail,
 }) =>
-  API.put(`projects/${id}`, {
+  API.put(`project/${_id}`, {
     projectName,
     projectLink,
     introduction,
@@ -81,6 +124,8 @@ export const updateProject = ({
     myRole,
     detail,
   });
+
+export const deleteProject = (_id) => API.del(`project/${_id}`);
 
 // music API
 export const getMusicList = (portfolioOwnerId) =>
