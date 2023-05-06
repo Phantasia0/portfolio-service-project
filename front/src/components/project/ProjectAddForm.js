@@ -2,13 +2,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Button, Form, FloatingLabel } from 'react-bootstrap';
+import { Button, Col, Form, FloatingLabel, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import useInput from 'hooks/useInput';
 import DatePicker from 'react-datepicker';
 import { addProject } from 'modules/sagas/project';
 
 import { useDispatch } from 'react-redux';
+
+import 'lib/styles/project/ProjectAddForm.css';
 
 const ProjectAddForm = ({ setVisible, portfolioOwnerId }) => {
   const dispatch = useDispatch();
@@ -42,29 +44,52 @@ const ProjectAddForm = ({ setVisible, portfolioOwnerId }) => {
   return (
     <Form
       onSubmit={onSubmitForm}
-      controlid="formEducation"
+      id="formProject"
       style={{ marginLeft: '0px' }}
     >
-      <Form.Group controlid="formProjectName" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formProjectName"
           type="text"
-          placeholder="프로젝트 이름을 입력해 주세요."
+          placeholder="프로젝트명을 입력해 주세요."
           value={projectName}
           onChange={onChangeProjectName}
         />
       </Form.Group>
 
-      <Form.Group controlid="formLink" style={{ marginBottom: '12px' }}>
-        <Form.Control
-          type="text"
-          placeholder="링크를 입력해 주세요."
-          value={projectLink}
-          onChange={onChangeProjectLink}
-        />
+      <Form.Group style={{ marginBottom: '12px' }}>
+        <Row>
+          <Col sm="auto" style={{ paddingTop: '8px' }}>
+            <p id="pProjectDate">진행일자</p>
+          </Col>
+          <Col sm="auto">
+            <DatePicker
+              id="formDate"
+              dateFormat="yyyy년 MM월 dd일"
+              dateFormatCalendar="yyyy년 MM월"
+              selected={startDate}
+              onChange={(date) => onChangeStartDate(date)}
+              withPortal
+            />
+          </Col>
+          <Col sm="auto" style={{ paddingTop: '8px' }}>
+            <p id="pProjectLink">프로젝트 링크</p>
+          </Col>
+          <Col sm="6">
+            <Form.Control
+              id="formProjectLink"
+              type="text"
+              placeholder="링크를 입력해 주세요."
+              value={projectLink}
+              onChange={onChangeProjectLink}
+            />
+          </Col>
+        </Row>
       </Form.Group>
 
-      <Form.Group controlid="formIntroduction" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formIntroduction"
           type="text"
           placeholder="프로젝트 소개 내용을 입력해주세요."
           value={introduction}
@@ -72,18 +97,9 @@ const ProjectAddForm = ({ setVisible, portfolioOwnerId }) => {
         />
       </Form.Group>
 
-      <Form.Group controlid="formProjectStartDate" style={{ marginBottom: '12px' }}>
-        <DatePicker
-          dateFormat="yyyy년 MM월 dd일"
-          dateFormatCalendar="yyyy년 MM월"
-          selected={startDate}
-          onChange={(date) => onChangeStartDate(date)}
-          withPortal
-        />
-      </Form.Group>
-
-      <Form.Group controlid="formMyRole" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formMyRole"
           type="text"
           placeholder="나의 역할을 입력해 주세요."
           value={myRole}
@@ -92,11 +108,12 @@ const ProjectAddForm = ({ setVisible, portfolioOwnerId }) => {
       </Form.Group>
 
       <FloatingLabel
-        controlId="ProjectDetail"
+        controlId="floatingTextarea"
         label="상세 설명을 입력해 주세요."
         className="mb-3"
       >
         <Form.Control
+          id="formDetail"
           as="textarea"
           className="form-control"
           placeholder="Leave a comment here"
@@ -106,10 +123,16 @@ const ProjectAddForm = ({ setVisible, portfolioOwnerId }) => {
       </FloatingLabel>
 
       <ButtonWrapper>
-        <Button variant="primary" type="submit" style={{ marginRight: '4px' }}>
+        <Button
+          id="btnProjectConfirm"
+          variant="primary"
+          type="submit"
+          style={{ marginRight: '4px' }}
+        >
           확인
         </Button>
         <Button
+          id="btnProjectCancel"
           variant="secondary"
           onClick={onClick}
           style={{ marginLeft: '4px' }}
@@ -126,4 +149,6 @@ export default ProjectAddForm;
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+
+  margin: 32px 0;
 `;

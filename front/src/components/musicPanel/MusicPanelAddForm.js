@@ -8,7 +8,7 @@ import useInput from 'hooks/useInput';
 import { useDispatch } from 'react-redux';
 import { addMusic } from 'modules/sagas/music';
 
-const MusicPanelAddForm = ({ setVisible, portfolioOwnerId }) => {
+const MusicPanelAddForm = ({ setVisible, portfolioOwnerId, setIsAdded }) => {
   const dispatch = useDispatch();
 
   const [title, onChangeTitle] = useInput('');
@@ -43,17 +43,19 @@ const MusicPanelAddForm = ({ setVisible, portfolioOwnerId }) => {
     // window.location.reload();
 
     setVisible(false);
+    setIsAdded(true);
   };
 
   return (
     <Form
       onSubmit={onSubmitForm}
-      controlid="formMusic"
-      style={{ marginLeft: '0px' }}
+      id="formMusic"
+      style={{ margin: '24px 0 0 0' }}
       encType="multipart/form-data"
     >
-      <Form.Group controlid="formTitle" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formTitle"
           type="text"
           placeholder="타이틀을 입력해주세요."
           value={title}
@@ -61,8 +63,9 @@ const MusicPanelAddForm = ({ setVisible, portfolioOwnerId }) => {
         />
       </Form.Group>
 
-      <Form.Group controlid="formArtist" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formArtist"
           type="text"
           placeholder="아티스트를 입력해주세요."
           value={artist}
@@ -70,21 +73,35 @@ const MusicPanelAddForm = ({ setVisible, portfolioOwnerId }) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formFileCover" className="mb-3">
-        <Form.Label>&nbsp;&nbsp;앨범 커버</Form.Label>
-        <Form.Control type="file" onChange={onChangeCoverFile} />
+      <Form.Group className="mb-3">
+        <Form.Label id="LabelAlbum">&nbsp;&nbsp;앨범 커버</Form.Label>
+        <Form.Control
+          id="formFileCover"
+          type="file"
+          onChange={onChangeCoverFile}
+        />
       </Form.Group>
 
-      <Form.Group controlId="formFileMusic" className="mb-3">
-        <Form.Label>&nbsp;&nbsp;음원 파일</Form.Label>
-        <Form.Control type="file" onChange={onChangeMusicFile} />
+      <Form.Group className="mb-3">
+        <Form.Label id="LabelFile">&nbsp;&nbsp;음원 파일</Form.Label>
+        <Form.Control
+          id="formFileMusic"
+          type="file"
+          onChange={onChangeMusicFile}
+        />
       </Form.Group>
 
       <ButtonWrapper>
-        <Button variant="primary" type="submit" style={{ marginRight: '4px' }}>
+        <Button
+          id="btnEduConfirm"
+          variant="primary"
+          type="submit"
+          style={{ marginRight: '4px' }}
+        >
           확인
         </Button>
         <Button
+          id="btnEduCancel"
           variant="secondary"
           onClick={onClick}
           style={{ marginLeft: '4px' }}

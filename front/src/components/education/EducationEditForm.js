@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 import { updateEducation } from 'modules/sagas/education';
 import Modals from 'components/common/Modals';
 
+import 'lib/styles/education/EducationEditForm.css';
+
 const EducationEditForm = ({ educationData, setIsEditing }) => {
   const [modalShow, setModalShow] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -23,17 +25,9 @@ const EducationEditForm = ({ educationData, setIsEditing }) => {
 
   useEffect(() => {
     if (isConfirmed) {
-      const { id } = educationData;
-      const updatedEducationData = { id, school, major, status };
-
-      // 백앤드와 협의
-      // Update API Dispatch [PATCH, PUT 타입]
-      // educationDataID 필요함
-      // 하지만 백엔드 완성 전 리덕스를 활용하여 faker 데이터들 테스트
-
+      const { _id } = educationData;
+      const updatedEducationData = { _id, school, major, status };
       dispatch(updateEducation(updatedEducationData));
-      console.log(updatedEducationData);
-
       setIsEditing(false);
     }
   }, [
@@ -56,19 +50,21 @@ const EducationEditForm = ({ educationData, setIsEditing }) => {
       <Form
         onSubmit={onSubmitForm}
         controlid="formEducation"
-        style={{ margin: '24px 0 0 0' }}
+        style={{ margin: '20px 0 0 0' }}
       >
-        <Form.Group controlid="formSchool" style={{ marginBottom: '12px' }}>
+        <Form.Group style={{ marginBottom: '12px' }}>
           <Form.Control
+            id="formSchool"
             type="text"
-            placeholder="학교 이름을 입력해 주세요."
+            placeholder="학교명을 입력해 주세요."
             value={school}
             onChange={onChangeSchool}
           />
         </Form.Group>
 
-        <Form.Group controlid="formMajor" style={{ marginBottom: '12px' }}>
+        <Form.Group style={{ marginBottom: '12px' }}>
           <Form.Control
+            id="formMajor"
             type="text"
             placeholder="전공명을 입력해 주세요."
             value={major}
@@ -76,61 +72,63 @@ const EducationEditForm = ({ educationData, setIsEditing }) => {
           />
         </Form.Group>
 
-        <Form.Group controlid="formStatus" style={{ marginBottom: '8px' }}>
-          {['radio'].map((type) => (
-            <div key={`inline-${type}-${educationData.id}`} className="mb-3">
-              <Form.Check
-                inline
-                label="재학중"
-                name="group1"
-                type={type}
-                value="재학중"
-                id={`inline-${type}-${educationData.id}-1`}
-                onChange={onChangeStatus}
-              />
-              <Form.Check
-                inline
-                label="학사졸업"
-                name="group1"
-                type={type}
-                value="학사졸업"
-                id={`inline-${type}-${educationData.id}-2`}
-                onChange={onChangeStatus}
-              />
-              <Form.Check
-                inline
-                label="석사졸업"
-                name="group1"
-                type={type}
-                value="석사졸업"
-                id={`inline-${type}-${educationData.id}-3`}
-                onChange={onChangeStatus}
-              />
-              <Form.Check
-                inline
-                label="박사졸업"
-                name="group1"
-                type={type}
-                value="박사졸업"
-                id={`inline-${type}-${educationData.id}-4`}
-                onChange={onChangeStatus}
-              />
-            </div>
-          ))}
-        </Form.Group>
+        <RadioWrapper>
+          <Form.Group id="formStatus">
+            {['radio'].map((type) => (
+              <div key={`inline-${type}-${educationData.id}`} className="mb-3">
+                <Form.Check
+                  inline
+                  label="재학중"
+                  name="group1"
+                  type={type}
+                  value="재학중"
+                  id={`inline-${type}-${educationData.id}-1`}
+                  onChange={onChangeStatus}
+                />
+                <Form.Check
+                  inline
+                  label="학사졸업"
+                  name="group1"
+                  type={type}
+                  value="학사졸업"
+                  id={`inline-${type}-${educationData.id}-2`}
+                  onChange={onChangeStatus}
+                />
+                <Form.Check
+                  inline
+                  label="석사졸업"
+                  name="group1"
+                  type={type}
+                  value="석사졸업"
+                  id={`inline-${type}-${educationData.id}-3`}
+                  onChange={onChangeStatus}
+                />
+                <Form.Check
+                  inline
+                  label="박사졸업"
+                  name="group1"
+                  type={type}
+                  value="박사졸업"
+                  id={`inline-${type}-${educationData.id}-4`}
+                  onChange={onChangeStatus}
+                />
+              </div>
+            ))}
+          </Form.Group>
+        </RadioWrapper>
 
         <ButtonWrapper>
           <Button
-            variant="primary"
+            id="btnEduConfirm"
             type="submit"
-            style={{ marginRight: '4px' }}
+            style={{ marginRight: '6px' }}
           >
             확인
           </Button>
           <Button
-            variant="secondary"
+            id="btnEduCancel"
             onClick={onClick}
-            style={{ marginLeft: '4px' }}
+            style={{ marginLeft: '6px' }}
           >
             취소
           </Button>
@@ -151,4 +149,10 @@ export default EducationEditForm;
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+
+  margin: 32px 0;
+`;
+
+const RadioWrapper = styled.div`
+  margin: 24px 0 0 0;
 `;

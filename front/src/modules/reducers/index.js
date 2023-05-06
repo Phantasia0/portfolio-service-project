@@ -10,6 +10,7 @@ import certificate from './certificate';
 import project from './project';
 import music from './music';
 import musics from './musics';
+import storys from './storys';
 
 const rootReducer = combineReducers({
   loading,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   project,
   music,
   musics,
+  storys,
 });
 
 export default rootReducer;

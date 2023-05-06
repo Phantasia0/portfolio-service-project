@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PortfolioPage, LoginPage, RegisterPage, NetworkPage } from './pages';
 
 import './App.css';
+import 'lib/styles/assets/fonts/font.css';
 
 const App = () => {
   const dispatch = useDispatch();

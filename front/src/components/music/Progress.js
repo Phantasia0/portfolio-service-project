@@ -23,11 +23,11 @@ const Progress = (props, ref) => {
   const dispatch = useDispatch();
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
-  const { playList, currentIndex, currentMusicId } = useSelector(
-    ({ music }) => ({
+  const { playList, currentIndex, cover } = useSelector(
+    ({ music, musics }) => ({
       playList: music.playList,
       currentIndex: music.currentIndex,
-      currentMusicId: music.currentMusicId,
+      cover: musics.cover,
     }),
   );
 
@@ -82,7 +82,7 @@ const Progress = (props, ref) => {
 
   useEffect(() => {
     if (playList) {
-      setAudioSrc(`${serverUrl}audio/music/${playList[currentIndex].music}`);
+      setAudioSrc(`${serverUrl}audio/music/${playList[currentIndex]?.music}`);
     }
   }, [currentIndex, playList]);
 
@@ -104,7 +104,7 @@ const Progress = (props, ref) => {
 
   return (
     <>
-      {playList && (
+      {playList && cover && (
         <ProgressWrapper onMouseDown={onMouseDownProgress}>
           <ProgressBarWrapper className="progress" ref={progressBarRef} />
           <audio

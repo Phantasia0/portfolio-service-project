@@ -12,6 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import './index.scss';
 
+import 'lib/styles/assets/fonts/font.css';
+
 const store = configureStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

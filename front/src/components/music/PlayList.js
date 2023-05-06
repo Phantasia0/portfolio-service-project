@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/prop-types */
 import React, { useCallback } from 'react';
@@ -41,20 +42,25 @@ const PlayList = ({ setShowList }) => {
   );
 
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Body>
-        <Card.Title className="d-flex justify-content-between">
-          PlayList
-          <X onClick={onClickX} style={{ cursor: 'pointer' }} />
-        </Card.Title>
-      </Card.Body>
-      <SortableList
-        data={playList}
-        onClickItem={onClickItem}
-        onDropItem={onDropItem}
-        renderItem={renderItem}
-      />
-    </Card>
+    <>
+      {playList && (
+        <Card id="CardPlaylist">
+          <Card.Body id="TitlePlaylist">
+            <Card.Title>
+              PlayList
+              <X onClick={onClickX} style={{ cursor: 'pointer' }} />
+            </Card.Title>
+          </Card.Body>
+          <SortableList
+            id="SortableList"
+            data={playList}
+            onClickItem={onClickItem}
+            onDropItem={onDropItem}
+            renderItem={renderItem}
+          />
+        </Card>
+      )}
+    </>
   );
 };
 

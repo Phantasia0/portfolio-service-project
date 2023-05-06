@@ -31,7 +31,7 @@ const BackgroundImage = styled.div`
   background-image: url(data:image/jpeg;base64,${({ cover }) => cover});
   background-size: cover;
   background-position: center;
-  opacity: 0.2;
+  opacity: 0.4;
   filter: blur(10px);
   position: fixed;
   top: 0;

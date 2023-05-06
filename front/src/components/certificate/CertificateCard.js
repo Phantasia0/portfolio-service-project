@@ -1,62 +1,55 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Container, Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { deleteCertificate } from 'modules/sagas/certificate';
+import moment from 'moment-timezone';
+import toDateString from 'lib/util/toDate';
+
+import 'lib/styles/certificate/CertificateCard.css';
 
 const CertificateCard = ({ certificateData, isEditable, setIsEditing }) => {
+  const dispatch = useDispatch();
   const onClick = () => {
     setIsEditing(true);
   };
 
-  useEffect(() => {
-    console.log(certificateData);
-  }, [certificateData]);
+  const onClickDelete = () => {
+    dispatch(deleteCertificate(certificateData._id));
+  };
 
   return (
     <Container style={{ margin: '12px 0px' }}>
       <Row>
-        <Col sm="6">
+        <Col sm="9" style={{ padding: '0px' }}>
           <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              발급기관 |
+            <Col sm="auto" id="rowCertificateCredit">
+              {certificateData.credit} |
             </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {certificateData.agency}
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              자격증명 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {certificateData.credit}
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              등급 및 점수 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
+            <Col sm="auto" id="rowCertificateGrade">
               {certificateData.grade}
             </Col>
-          </Row>
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              취득 일자 |
+            <Col sm="auto" id="rowCertificateDateAgency">
+              (
+              {`${toDateString(
+                moment(certificateData.startDate).tz('Asia/Seoul'),
+              )}`}
+              )
             </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {certificateData.acquireDate.toLocaleDateString('ko-KR')}
-            </Col>
           </Row>
-
-          <RowWrapper />
         </Col>
-        <Col sm="2">
+        <Col id="colBtnCertificate">
           {isEditable && (
-            <Button variant="outline-primary" size="sm" onClick={onClick}>
-              편집
-            </Button>
+            <>
+              <Button id="btnEditCertificate" onClick={onClick}>
+                편집
+              </Button>
+              <Button id="btnEditCertificate" onClick={onClickDelete}>
+                삭제
+              </Button>
+            </>
           )}
         </Col>
       </Row>
@@ -65,15 +58,3 @@ const CertificateCard = ({ certificateData, isEditable, setIsEditing }) => {
 };
 
 export default CertificateCard;
-
-const RowWrapper = styled(Row)`
-  border: 2px solid;
-  border-image: linear-gradient(to right, blue, white) 1;
-  border-top: 0px;
-  border-left: 0px;
-  border-right: 0px;
-  opacity: 0.4;
-
-  padding: 12px 0 0 12px;
-  width: 100%;
-`;

@@ -5,7 +5,7 @@ import Page from './Page';
 
 const PortfolioPage = () => {
   return (
-    <Page>
+    <Page title="PortfolioPage">
       <Portfolio />
     </Page>
   );
