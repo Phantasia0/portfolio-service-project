@@ -6,6 +6,7 @@ import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { awardRouter, certificateRouter, educationRouter, projectRouter } from "./routers";
 
 import { login_required } from "./middlewares/login_required";
+import storyRouter from "./routers/storyRouter";
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use("/award", awardRouter);
 app.use("/certificate", certificateRouter);
 app.use("/project", projectRouter);
 app.use("/audio", musicRouter); // 여기에는 login_required 적용 아직 시키지 말아주세요. 오디오 헤더 문제를 해결하면 그때 연결해주세요. 사실 필요없긴 합니다
+app.use("/mystory", storyRouter);
+
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
 
