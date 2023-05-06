@@ -1,73 +1,55 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Container, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { deleteAward } from 'modules/sagas/award';
+import moment from 'moment-timezone';
+import toDateString from 'lib/util/toDate';
+
+import 'lib/styles/award/AwardCard.css';
 
 const AwardCard = ({ awardData, isEditable, setIsEditing }) => {
+  const dispatch = useDispatch();
   const onClick = () => {
     setIsEditing(true);
   };
 
-  useEffect(() => {
-    console.log(awardData);
-  }, [awardData]);
+  const onClickDelete = () => {
+    dispatch(deleteAward(awardData._id));
+  };
 
   return (
-    <Container style={{ margin: '12px 0px' }}>
+    <Container style={{ marginTop: '28px', padding: '0px' }}>
       <Row>
-        <Col sm="6">
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              기간명 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {awardData.association}
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              대회명 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {awardData.contest}
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              수상 일자 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {awardData.startDate.toLocaleDateString('ko-KR')}
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              수상 내용 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {awardData.prize}
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              상세 내용 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {awardData.detail}
-            </Col>
-          </Row>
-
-          <RowWrapper />
+        <Col sm="auto" id="colAwardAssociation">
+          {awardData.association} |
         </Col>
-        <Col sm="2">
+        <Col sm="auto" id="colAwardContest">
+          {awardData.contest}
+        </Col>
+        <Col sm="auto" id="colAwardDate">
+          ({`${toDateString(moment(awardData.startDate).tz('Asia/Seoul'))}`})
+        </Col>
+        <Col id="colBtnAward">
           {isEditable && (
-            <Button variant="outline-primary" size="sm" onClick={onClick}>
-              편집
-            </Button>
+            <>
+              <Button id="btnEditAward" onClick={onClick}>
+                편집
+              </Button>
+              <Button id="btnEditAward" onClick={onClickDelete}>
+                삭제
+              </Button>
+            </>
           )}
         </Col>
       </Row>
+      <Row id="rowAwardPrize">{awardData.prize}</Row>
+      <Row id="rowAwardDetail">{awardData.detail}</Row>
+      <RowWrapper />
     </Container>
   );
 };
@@ -75,13 +57,10 @@ const AwardCard = ({ awardData, isEditable, setIsEditing }) => {
 export default AwardCard;
 
 const RowWrapper = styled(Row)`
-  border: 2px solid;
-  border-image: linear-gradient(to right, blue, white) 1;
-  border-top: 0px;
-  border-left: 0px;
-  border-right: 0px;
-  opacity: 0.4;
+  border-style: solid;
+  border-width: 2px 0px 0px 0px;
+  border-color: #1e1f20;
 
-  padding: 12px 0 0 12px;
-  width: 100%;
+  margin: 28px 0px;
+  padding: 0px;
 `;

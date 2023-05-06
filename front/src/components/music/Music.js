@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadMusic } from 'modules/sagas/music';
 import { loadMusicList } from 'modules/reducers/music';
 import Spinners from 'components/common/Spinners';
-
 import { Card } from 'react-bootstrap';
+import styled from 'styled-components';
+
 import SongInfo from './SongInfo';
 import Progress from './Progress';
 import ControlPanel from './ControlPanel';
@@ -31,13 +32,13 @@ const Music = ({ portfolioOwnerId }) => {
 
   useEffect(() => {
     dispatch(loadMusic(portfolioOwnerId));
-  }, [dispatch, portfolioOwnerId, isAdded]);
+  }, [dispatch, portfolioOwnerId]);
 
   useEffect(() => {
     if (!loading && musics?.length === 0) {
       dispatch(loadMusicList([]));
     }
-    if (!loading && musics) {
+    if (!loading && musics && musics.length > 0) {
       dispatch(loadMusicList(musics));
     }
   }, [dispatch, loading, musics, portfolioOwnerId]);
@@ -63,7 +64,22 @@ const Music = ({ portfolioOwnerId }) => {
   }
 
   if (musics?.length === 0) {
-    return <span>&nbsp;&nbsp;&nbsp;&nbsp;No Music Please Add Music</span>;
+    return (
+      <Card
+        style={{
+          width: '18.1rem',
+          paddingTop: '16px',
+          border: 'solid 2px #1e1f20',
+          margin: '20px',
+        }}
+      >
+        <PanelNoMusic>
+          No Music
+          <br />
+          Please Add Music 😢
+        </PanelNoMusic>
+      </Card>
+    );
   }
 
   if (playList?.length === 0) {
@@ -73,7 +89,16 @@ const Music = ({ portfolioOwnerId }) => {
   return (
     <>
       {!loading && musics && playList && (
-        <Card className="mb-2 ms-3 mr-5" style={{ width: '18.1rem' }}>
+        <Card
+          id="CardMusic"
+          style={{
+            width: '18.1rem',
+            paddingTop: '16px',
+            border: 'solid 2px #1e1f20',
+            margin: '20px',
+            borderRadius: '10px',
+          }}
+        >
           <Card.Title>
             <SongInfo />
           </Card.Title>
@@ -95,3 +120,14 @@ const Music = ({ portfolioOwnerId }) => {
 };
 
 export default Music;
+
+const PanelNoMusic = styled.div`
+  width: flex;
+
+  background-color: #ffffff;
+  text-align: center;
+
+  font-weight: 600;
+
+  padding-bottom: 18px;
+`;

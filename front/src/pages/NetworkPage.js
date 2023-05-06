@@ -4,7 +4,7 @@ import Page from './Page';
 
 const NetworkPage = () => {
   return (
-    <Page>
+    <Page title="NetworkPage">
       <Network />
     </Page>
   );

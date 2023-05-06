@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { register } from 'modules/sagas/auth';
 import { initAuth } from 'modules/reducers/auth';
 
+import 'lib/styles/user/RegisterForm.css';
+
 const RegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -65,68 +67,69 @@ const RegisterForm = () => {
   return (
     <div>
       {!loading && (
-        <Container>
-          <Row className="justify-content-md-center mt-5">
+        <Container id="ContainerRegister">
+          <Row id="rowRegister">
             <Col lg={8}>
               <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="registerEmail">
+                <Form.Group>
                   <Form.Label>이메일 주소</Form.Label>
                   <Form.Control
+                    id="registerEmail"
                     type="email"
                     autoComplete="off"
                     value={email}
                     onChange={onChangeEmail}
                   />
                   {!isEmailValid && (
-                    <Form.Text className="text-success">
+                    <Form.Text id="text-success">
                       이메일 형식이 올바르지 않습니다.
                     </Form.Text>
                   )}
                 </Form.Group>
 
-                <Form.Group controlId="registerPassword" className="mt-3">
+                <Form.Group className="mt-3">
                   <Form.Label>비밀번호</Form.Label>
                   <Form.Control
+                    id="registerPassword"
                     type="password"
                     autoComplete="off"
                     value={password}
                     onChange={onChangePassword}
                   />
                   {!isPasswordValid && (
-                    <Form.Text className="text-success">
+                    <Form.Text id="text-success">
                       비밀번호는 4글자 이상으로 설정해 주세요.
                     </Form.Text>
                   )}
                 </Form.Group>
 
-                <Form.Group
-                  controlId="registerConfirmPassword"
-                  className="mt-3"
-                >
+                <Form.Group className="mt-3">
                   <Form.Label>비밀번호 재확인</Form.Label>
                   <Form.Control
+                    id="registerConfirmPassword"
                     type="password"
                     autoComplete="off"
                     value={confirmPassword}
                     onChange={onChangeConfirmPassword}
                   />
                   {!isPasswordSame && (
-                    <Form.Text className="text-success">
+                    <Form.Text id="text-success">
                       비밀번호가 일치하지 않습니다.
                     </Form.Text>
                   )}
                 </Form.Group>
 
-                <Form.Group controlId="registerName" className="mt-3">
+                <Form.Group className="mt-3">
                   <Form.Label>이름</Form.Label>
                   <Form.Control
+                    id="registerName"
                     type="text"
                     autoComplete="off"
                     value={name}
                     onChange={onChangeName}
                   />
                   {!isNameValid && (
-                    <Form.Text className="text-success">
+                    <Form.Text id="text-success">
                       이름은 2글자 이상으로 설정해 주세요.
                     </Form.Text>
                   )}
@@ -137,6 +140,7 @@ const RegisterForm = () => {
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
                     <Button
+                      id="btnSignup"
                       variant="primary"
                       type="submit"
                       disabled={!isFormValid}
@@ -148,7 +152,11 @@ const RegisterForm = () => {
 
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
-                    <Button variant="light" onClick={() => navigate('/login')}>
+                    <Button
+                      id="btnLogin"
+                      variant="light"
+                      onClick={() => navigate('/login')}
+                    >
                       로그인하기
                     </Button>
                   </Col>

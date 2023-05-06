@@ -46,9 +46,18 @@ const PlayListItem = ({ item, idx }) => {
             },
           ])}
         >
-          <div className="title">{item.title}</div>
-          <div className="artist">{item.artist}</div>
-          <div className="duration">{duration}</div>
+          <div id="title" style={{ fontSize: '120%', fontWeight: '600' }}>
+            {item.title}
+          </div>
+          <div id="artist" style={{ fontWeight: '600' }}>
+            {item.artist}
+          </div>
+          <div
+            id="duration"
+            style={{ fontWeight: '400', marginBottom: '24px' }}
+          >
+            {duration}
+          </div>
         </InfoWrapper>
       </Infos>
     </ListGroup.Item>
@@ -71,10 +80,12 @@ const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  .title {
-    font-size: 1.2rem;
-  }
-  border-image: linear-gradient(to right, blue, white) 1;
+  border-style: solid;
+  border-width: 0px 0px 2px 0px;
+  border-color: #1e1f20;
 
-  border-bottom: 1px solid #7950f2;
+  padding: 0 20px 0 0;
+  margin: 0 0 0 -12px;
+
+  width: 240px;
 `;

@@ -2,13 +2,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Button, Form, FloatingLabel } from 'react-bootstrap';
+import { Button, Col, Form, FloatingLabel, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import useInput from 'hooks/useInput';
 import DatePicker from 'react-datepicker';
 import { addAward } from 'modules/sagas/award';
 
 import { useDispatch } from 'react-redux';
+
+import 'lib/styles/award/AwardAddForm.css';
 
 const AwardAddForm = ({ setVisible, portfolioOwnerId }) => {
   const dispatch = useDispatch();
@@ -42,8 +44,27 @@ const AwardAddForm = ({ setVisible, portfolioOwnerId }) => {
       controlid="formEducation"
       style={{ marginLeft: '0px' }}
     >
-      <Form.Group controlid="formAssociation" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
+        <Row>
+          <Col sm="auto" style={{ paddingTop: '8px' }}>
+            <p id="ColAwardDate">수상일자</p>
+          </Col>
+          <Col>
+            <DatePicker
+              id="formStartDate"
+              dateFormat="yyyy년 MM월 dd일"
+              dateFormatCalendar="yyyy년 MM월"
+              selected={startDate}
+              onChange={(date) => onChangeStartDate(date)}
+              withPortal
+            />
+          </Col>
+        </Row>
+      </Form.Group>
+
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formAssociation"
           type="text"
           placeholder="기관 이름을 입력해 주세요."
           value={association}
@@ -51,8 +72,9 @@ const AwardAddForm = ({ setVisible, portfolioOwnerId }) => {
         />
       </Form.Group>
 
-      <Form.Group controlid="formContest" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formContest"
           type="text"
           placeholder="대회명을 입력해 주세요."
           value={contest}
@@ -60,18 +82,9 @@ const AwardAddForm = ({ setVisible, portfolioOwnerId }) => {
         />
       </Form.Group>
 
-      <Form.Group controlid="formStartDate" style={{ marginBottom: '12px' }}>
-        <DatePicker
-          dateFormat="yyyy년 MM월 dd일"
-          dateFormatCalendar="yyyy년 MM월"
-          selected={startDate}
-          onChange={(date) => onChangeStartDate(date)}
-          withPortal
-        />
-      </Form.Group>
-
-      <Form.Group controlid="formPrize" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formPrize"
           type="text"
           placeholder="수상명 입력해 주세요."
           value={prize}
@@ -85,6 +98,7 @@ const AwardAddForm = ({ setVisible, portfolioOwnerId }) => {
         className="mb-3"
       >
         <Form.Control
+          id="formDetail"
           as="textarea"
           className="form-control"
           placeholder="Leave a comment here"
@@ -94,10 +108,16 @@ const AwardAddForm = ({ setVisible, portfolioOwnerId }) => {
       </FloatingLabel>
 
       <ButtonWrapper>
-        <Button variant="primary" type="submit" style={{ marginRight: '4px' }}>
+        <Button
+          id="btnAwardConfirm"
+          variant="primary"
+          type="submit"
+          style={{ marginRight: '4px' }}
+        >
           확인
         </Button>
         <Button
+          id="btnAwardCancel"
           variant="secondary"
           onClick={onClick}
           style={{ marginLeft: '4px' }}
@@ -114,4 +134,6 @@ export default AwardAddForm;
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+
+  margin: 32px 0;
 `;

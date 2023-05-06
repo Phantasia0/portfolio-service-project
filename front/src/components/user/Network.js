@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from 'modules/sagas/users';
 import styled from 'styled-components';
@@ -48,13 +48,24 @@ function Network() {
     <div>
       {!loading && (
         <Container fluid>
-          <Row xs="auto" className="jusify-content-center">
+          <Row>
             {!loading && users && (
-              <div>
+              <Row
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'left',
+                  gap: '2rem',
+                }}
+              >
                 {users.map((user) => (
-                  <UserCard key={user.id} user={user} isNetwork />
+                  <Col
+                    style={{ padding: '4px 0px 16px 0px', flexGrow: 'unset' }}
+                  >
+                    <UserCard key={user.id} user={user} isNetwork />
+                  </Col>
                 ))}{' '}
-              </div>
+              </Row>
             )}
           </Row>
         </Container>

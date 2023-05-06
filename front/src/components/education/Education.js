@@ -1,16 +1,20 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { loadEducation } from 'modules/sagas/education';
 
 import Spinners from 'components/common/Spinners';
+import DecorationBar from 'components/common/DecorationBar';
 import EducationAddForm from './EducationAddForm';
 import EducationView from './EducationView';
+
+import 'lib/styles/education/Education.css';
 
 const Education = ({ isEditable, portfolioOwnerId }) => {
   const dispatch = useDispatch();
@@ -30,11 +34,6 @@ const Education = ({ isEditable, portfolioOwnerId }) => {
   };
 
   useEffect(() => {
-    // 백앤드와 협의
-    // Read API Dispatch [GET 타입]
-    // portfolioOwnerId 필요함.
-    // 하지만 백엔드 완성 전 리덕스를 활용하여 faker 데이터들 테스트
-
     dispatch(loadEducation(portfolioOwnerId));
   }, [dispatch, portfolioOwnerId]);
 
@@ -43,32 +42,40 @@ const Education = ({ isEditable, portfolioOwnerId }) => {
   }
 
   if (error) {
-    return 'LOAD ERROR';
+    return `${error.message}`;
   }
 
   return (
     <div>
+      <DecorationBar />
       {!loading && (
-        <Card style={{ padding: '6px', marginBottom: '1.5rem' }}>
-          <Card.Body>
-            <Card.Title style={{ fontSize: '1.5rem', fontWeight: '500' }}>
-              학력
+        <Card id="CardEducation">
+          <Card.Body id="cardEducationBody">
+            <Card.Title>
+              <Row>
+                <Col sm="auto" lg="auto" id="cardTitleEducation">
+                  EDUCATION
+                </Col>
+                <Col sm="auto" lg="auto" id="cardTitleEducationKor">
+                  학력
+                </Col>
+              </Row>
             </Card.Title>
-            <Card.Text>
-              {educationDatas
-                ?.filter((data) => data.userId === portfolioOwnerId)
-                .map((data) => (
+            <CardWrapper>
+              <Card.Text>
+                {educationDatas?.map((data) => (
                   <EducationView
-                    key={data.id}
+                    key={data._id}
                     educationData={data}
                     isEditable={isEditable}
                   />
                 ))}
-            </Card.Text>
+              </Card.Text>
+            </CardWrapper>
 
             <ButtonWrapper>
               {isEditable && (
-                <Button col="6" onClick={onClick} style={{ opacity: '0.5' }}>
+                <Button id="btnAddEducation" onClick={onClick}>
                   +
                 </Button>
               )}
@@ -93,6 +100,15 @@ export default Education;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
   margin: 12px 0;
+`;
+
+const CardWrapper = styled.div`
+  border-style: solid;
+  border-width: 2px 0px 2px 0px;
+  border-color: #1e1f20;
+
+  margin: 30px 0px;
+  padding: 8px 0px;
 `;

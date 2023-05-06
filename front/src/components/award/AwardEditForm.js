@@ -1,12 +1,16 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-import { Button, Form, FloatingLabel } from 'react-bootstrap';
+import { Button, Col, Form, FloatingLabel, Row } from 'react-bootstrap';
 import useInput from 'hooks/useInput';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import Modals from 'components/common/Modals';
 import DatePicker from 'react-datepicker';
 import { updateAward } from 'modules/sagas/award';
+import moment from 'moment-timezone';
+
+import 'lib/styles/award/AwardEditForm.css';
 
 const AwardEditForm = ({ awardData, setIsEditing }) => {
   const [modalShow, setModalShow] = useState(false);
@@ -15,7 +19,9 @@ const AwardEditForm = ({ awardData, setIsEditing }) => {
 
   const [association, onChangeAssociation] = useInput(awardData.association);
   const [contest, onChangeContest] = useInput(awardData.contest);
-  const [startDate, onChangeStartDate] = useState(awardData.startDate);
+  const [startDate, onChangeStartDate] = useState(
+    moment(awardData.startDate).tz('Asia/Seoul'),
+  );
   const [prize, onChangePrize] = useInput(awardData.prize);
   const [detail, onChangeDetail] = useInput(awardData.detail);
 
@@ -26,9 +32,9 @@ const AwardEditForm = ({ awardData, setIsEditing }) => {
 
   useEffect(() => {
     if (isConfirmed) {
-      const { id } = awardData;
+      const { _id } = awardData;
       const updatedAwardData = {
-        id,
+        _id,
         association,
         contest,
         startDate,
@@ -62,14 +68,30 @@ const AwardEditForm = ({ awardData, setIsEditing }) => {
     <>
       <Form
         onSubmit={onSubmitForm}
-        controlid="formEducation"
-        style={{ marginLeft: '0px' }}
+        id="formAward"
+        style={{ margin: '40px 0 0 0' }}
       >
-        <Form.Group
-          controlid="formAssociation"
-          style={{ marginBottom: '12px' }}
-        >
+        <Form.Group style={{ margin: '6px 0' }}>
+          <Row>
+            <Col sm="auto" style={{ paddingTop: '8px' }}>
+              <p id="pAwardDate">수상일자</p>
+            </Col>
+            <Col>
+              <DatePicker
+                id="formStartDate"
+                selected={startDate.toDate()}
+                onChange={(date) =>
+                  onChangeStartDate(moment(date).tz('Asia/Seoul'))
+                }
+                withPortal
+              />
+            </Col>
+          </Row>
+        </Form.Group>
+
+        <Form.Group style={{ marginBottom: '12px' }}>
           <Form.Control
+            id="formAssociation"
             type="text"
             placeholder="기관 이름을 입력해 주세요."
             value={association}
@@ -77,8 +99,9 @@ const AwardEditForm = ({ awardData, setIsEditing }) => {
           />
         </Form.Group>
 
-        <Form.Group controlid="formContest" style={{ marginBottom: '12px' }}>
+        <Form.Group style={{ marginBottom: '12px' }}>
           <Form.Control
+            id="formContest"
             type="text"
             placeholder="대회명을 입력해 주세요."
             value={contest}
@@ -86,16 +109,9 @@ const AwardEditForm = ({ awardData, setIsEditing }) => {
           />
         </Form.Group>
 
-        <Form.Group controlid="formStartDate" style={{ marginBottom: '12px' }}>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => onChangeStartDate(date)}
-            withPortal
-          />
-        </Form.Group>
-
-        <Form.Group controlid="formPrize" style={{ marginBottom: '12px' }}>
+        <Form.Group style={{ marginBottom: '12px' }}>
           <Form.Control
+            id="formPrize"
             type="text"
             placeholder="수상명 입력해 주세요."
             value={prize}
@@ -103,12 +119,9 @@ const AwardEditForm = ({ awardData, setIsEditing }) => {
           />
         </Form.Group>
 
-        <FloatingLabel
-          controlId="floatingTextarea"
-          label="상세내용"
-          className="mb-3"
-        >
+        <FloatingLabel id="floatingTextarea" label="상세내용" className="mb-3">
           <Form.Control
+            id="formDetail"
             as="textarea"
             className="form-control"
             placeholder="Leave a comment here"
@@ -119,6 +132,7 @@ const AwardEditForm = ({ awardData, setIsEditing }) => {
 
         <ButtonWrapper>
           <Button
+            id="btnAwardConfirm"
             variant="primary"
             type="submit"
             style={{ marginRight: '4px' }}
@@ -126,6 +140,7 @@ const AwardEditForm = ({ awardData, setIsEditing }) => {
             확인
           </Button>
           <Button
+            id="btnAwardCancel"
             variant="secondary"
             onClick={onClick}
             style={{ marginLeft: '4px' }}
@@ -149,4 +164,6 @@ export default AwardEditForm;
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+
+  margin: 32px 0;
 `;

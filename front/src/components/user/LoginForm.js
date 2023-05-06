@@ -11,6 +11,8 @@ import { relogin } from 'modules/reducers/user';
 import styled from 'styled-components';
 import { initAuth } from 'modules/reducers/auth';
 
+import 'lib/styles/user/LoginForm.css';
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,35 +57,37 @@ const LoginForm = () => {
   return (
     <div>
       {!loading && (
-        <Container>
-          <Row className="justify-content-md-center mt-5">
+        <Container id="ContainerLogin">
+          <Row id="rowLogin">
             <Col lg={8}>
               <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="loginEmail">
+                <Form.Group>
                   <Form.Label>이메일 주소</Form.Label>
                   <Form.Control
+                    id="loginEmail"
                     type="email"
                     autoComplete="on"
                     value={email}
                     onChange={onChangeEmail}
                   />
                   {!isEmailValid && (
-                    <Form.Text className="text-success">
+                    <Form.Text id="text-success">
                       이메일 형식이 올바르지 않습니다.
                     </Form.Text>
                   )}
                 </Form.Group>
 
-                <Form.Group controlId="loginPassword" className="mt-3">
+                <Form.Group className="mt-3">
                   <Form.Label>비밀번호</Form.Label>
                   <Form.Control
+                    id="loginPassword"
                     type="password"
                     autoComplete="on"
                     value={password}
                     onChange={onChangePassword}
                   />
                   {!isPasswordValid && (
-                    <Form.Text className="text-success">
+                    <Form.Text id="text-success">
                       비밀번호는 4글자 이상입니다.
                     </Form.Text>
                   )}
@@ -94,6 +98,7 @@ const LoginForm = () => {
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
                     <Button
+                      id="btnLogin"
                       variant="primary"
                       type="submit"
                       disabled={!isFormValid}
@@ -106,6 +111,7 @@ const LoginForm = () => {
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
                     <Button
+                      id="btnSignup"
                       variant="light"
                       onClick={() => navigate('/register', { replace: true })}
                     >

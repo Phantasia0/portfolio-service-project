@@ -1,46 +1,44 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Badge, Button, Container, Col, Row } from 'react-bootstrap';
+import { Button, Container, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { deleteEducation } from 'modules/sagas/education';
+
+import 'lib/styles/education/EducationCard.css';
 
 const EducationCard = ({ educationData, isEditable, setIsEditing }) => {
+  const dispatch = useDispatch();
   const onClick = () => {
     setIsEditing(true);
   };
 
+  const onClickDelete = () => {
+    dispatch(deleteEducation(educationData._id));
+  };
+
   return (
-    <Container style={{ margin: '12px 0px' }}>
-      <Row>
-        <Col sm="6">
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              학교명 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {educationData.school}
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="auto" style={{ padding: '0', margin: '0', color: 'blue' }}>
-              전공명 |
-            </Col>
-            <Col sm="auto" style={{ padding: '0 0 0 4px', margin: '0' }}>
-              {educationData.major}
-            </Col>
-            <Col sm="4">
-              <Badge bg="primary" style={{ opacity: '0.5' }}>
-                {educationData.status}
-              </Badge>
-            </Col>
-          </Row>
-          <RowWrapper />
+    <Container style={{ marginTop: '28px' }}>
+      <Row style={{ marginBottom: '28px' }}>
+        <Col sm="auto" id="colEduStatus">
+          {educationData.status}
         </Col>
-        <Col sm="2">
+        <Col sm="6">
+          <Row id="rowEduSchool">{educationData.school}</Row>
+          <Row id="rowEduMajor">{educationData.major}</Row>
+        </Col>
+        <Col id="colBtnEdu">
           {isEditable && (
-            <Button variant="outline-primary" size="sm" onClick={onClick}>
-              편집
-            </Button>
+            <>
+              <Button id="btnEditEducation" onClick={onClick}>
+                편집
+              </Button>
+              <Button id="btnEditEducation" onClick={onClickDelete}>
+                삭제
+              </Button>
+            </>
           )}
         </Col>
       </Row>
@@ -49,15 +47,3 @@ const EducationCard = ({ educationData, isEditable, setIsEditing }) => {
 };
 
 export default EducationCard;
-
-const RowWrapper = styled(Row)`
-  border: 2px solid;
-  border-image: linear-gradient(to right, blue, white) 1;
-  border-top: 0px;
-  border-left: 0px;
-  border-right: 0px;
-  opacity: 0.4;
-
-  padding: 12px 0 0 12px;
-  width: 100%;
-`;

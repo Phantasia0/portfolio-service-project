@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import useInput from 'hooks/useInput';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import Modals from 'components/common/Modals';
 import DatePicker from 'react-datepicker';
 import { updateCertificate } from 'modules/sagas/certificate';
+import moment from 'moment-timezone';
+
+import 'lib/styles/certificate/CertificateEditForm.css';
 
 const CertificateEditForm = ({ certificateData, setIsEditing }) => {
   const [modalShow, setModalShow] = useState(false);
@@ -17,7 +20,7 @@ const CertificateEditForm = ({ certificateData, setIsEditing }) => {
   const [credit, onChangeCredit] = useInput(certificateData.credit);
   const [grade, onChangeGrade] = useInput(certificateData.grade);
   const [acquireDate, onChangeAcquireDate] = useState(
-    certificateData.acquireDate,
+    moment(certificateData.startDate).tz('Asia/Seoul'),
   );
 
   const onSubmitForm = (e) => {
@@ -27,9 +30,9 @@ const CertificateEditForm = ({ certificateData, setIsEditing }) => {
 
   useEffect(() => {
     if (isConfirmed) {
-      const { id } = certificateData;
+      const { _id } = certificateData;
       const updatedCertificateData = {
-        id,
+        _id,
         agency,
         credit,
         grade,
@@ -41,14 +44,14 @@ const CertificateEditForm = ({ certificateData, setIsEditing }) => {
       setIsEditing(false);
     }
   }, [
+    dispatch,
+    certificateData,
     agency,
     credit,
-    dispatch,
     isConfirmed,
     grade,
     setIsEditing,
     acquireDate,
-    certificateData,
   ]);
 
   const onClick = () => {
@@ -58,22 +61,10 @@ const CertificateEditForm = ({ certificateData, setIsEditing }) => {
 
   return (
     <>
-      <Form
-        onSubmit={onSubmitForm}
-        controlid="formEducation"
-        style={{ marginLeft: '0px' }}
-      >
-        <Form.Group controlid="formAgency" style={{ marginBottom: '12px' }}>
+      <Form onSubmit={onSubmitForm} id="formCertificate">
+        <Form.Group style={{ marginBottom: '12px' }}>
           <Form.Control
-            type="text"
-            placeholder="발급기관을 입력해 주세요."
-            value={agency}
-            onChange={onChangeAgency}
-          />
-        </Form.Group>
-
-        <Form.Group controlid="formCredit" style={{ marginBottom: '12px' }}>
-          <Form.Control
+            id="formCredit"
             type="text"
             placeholder="자격증명을 입력해 주세요."
             value={credit}
@@ -81,8 +72,9 @@ const CertificateEditForm = ({ certificateData, setIsEditing }) => {
           />
         </Form.Group>
 
-        <Form.Group controlid="formGrade" style={{ marginBottom: '12px' }}>
+        <Form.Group style={{ marginBottom: '12px' }}>
           <Form.Control
+            id="formGrade"
             type="text"
             placeholder="등급 및 점수를 입력해 주세요."
             value={grade}
@@ -90,19 +82,39 @@ const CertificateEditForm = ({ certificateData, setIsEditing }) => {
           />
         </Form.Group>
 
-        <Form.Group
-          controlid="formAcquireDate"
-          style={{ marginBottom: '12px' }}
-        >
-          <DatePicker
-            selected={acquireDate}
-            onChange={(date) => onChangeAcquireDate(date)}
-            withPortal
-          />
+        <Form.Group style={{ marginBottom: '12px' }}>
+          <Row>
+            <Col sm="auto" style={{ paddingTop: '8px' }}>
+              <p id="pCertificateAgency">발급기관</p>
+            </Col>
+            <Col>
+              <Form.Control
+                id="formAgency"
+                type="text"
+                placeholder="발급기관을 입력해 주세요."
+                value={agency}
+                onChange={onChangeAgency}
+              />
+            </Col>
+            <Col sm="auto" style={{ paddingTop: '8px' }}>
+              <p id="pAcquireDate">취득일자</p>
+            </Col>
+            <Col>
+              <DatePicker
+                id="formAcquireDate"
+                selected={acquireDate.toDate()}
+                onChange={(date) =>
+                  onChangeAcquireDate(moment(date).tz('Asia/Seoul'))
+                }
+                withPortal
+              />
+            </Col>
+          </Row>
         </Form.Group>
 
         <ButtonWrapper>
           <Button
+            id="btnCertificateConfirm"
             variant="primary"
             type="submit"
             style={{ marginRight: '4px' }}
@@ -110,6 +122,7 @@ const CertificateEditForm = ({ certificateData, setIsEditing }) => {
             확인
           </Button>
           <Button
+            id="btnCertificateCancel"
             variant="secondary"
             onClick={onClick}
             style={{ marginLeft: '4px' }}
@@ -133,4 +146,6 @@ export default CertificateEditForm;
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+
+  margin: 32px 0;
 `;

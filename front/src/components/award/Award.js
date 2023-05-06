@@ -1,16 +1,20 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { loadAward } from 'modules/sagas/award';
 
 import Spinners from 'components/common/Spinners';
+import DecorationBar from 'components/common/DecorationBar';
 import AwardAddForm from './AwardAddForm';
 import AwardView from './AwardView';
+
+import 'lib/styles/award/Award.css';
 
 const Award = ({ isEditable, portfolioOwnerId }) => {
   const dispatch = useDispatch();
@@ -43,40 +47,48 @@ const Award = ({ isEditable, portfolioOwnerId }) => {
 
   return (
     <div>
+      <DecorationBar />
       {!loading && (
-        <Card style={{ padding: '6px', marginBottom: '1.5rem' }}>
-          <Card.Body>
-            <Card.Title style={{ fontSize: '1.5rem', fontWeight: '500' }}>
-              수상 이력
+        <Card id="CardAward">
+          <Card.Body id="cardAwardBody">
+            <Card.Title>
+              <Row>
+                <Col sm="auto" lg="auto" id="cardTitleAward">
+                  AWARD
+                </Col>
+                <Col sm="auto" lg="auto" id="cardTitleAwardKor">
+                  수상 이력
+                </Col>
+              </Row>
             </Card.Title>
-            <Card.Text>
-              {awardDatas
-                ?.filter((data) => data.userId === portfolioOwnerId)
-                .map((data) => (
+            <CardWrapper>
+              <Card.Text>
+                {awardDatas?.map((data) => (
                   <AwardView
-                    key={data.id}
+                    key={data._id}
                     awardData={data}
                     isEditable={isEditable}
                   />
                 ))}
-            </Card.Text>
+              </Card.Text>
 
-            <ButtonWrapper>
-              {isEditable && (
-                <Button col="6" onClick={onClick} style={{ opacity: '0.5' }}>
-                  +
-                </Button>
-              )}
-            </ButtonWrapper>
+              <ButtonWrapper>
+                {isEditable && (
+                  <Button id="btnAddAward" onClick={onClick}>
+                    +
+                  </Button>
+                )}
+              </ButtonWrapper>
 
-            <Card.Text>
-              {isVisible && (
-                <AwardAddForm
-                  setVisible={setVisible}
-                  portfolioOwnerId={portfolioOwnerId}
-                />
-              )}
-            </Card.Text>
+              <Card.Text>
+                {isVisible && (
+                  <AwardAddForm
+                    setVisible={setVisible}
+                    portfolioOwnerId={portfolioOwnerId}
+                  />
+                )}
+              </Card.Text>
+            </CardWrapper>
           </Card.Body>
         </Card>
       )}
@@ -88,6 +100,15 @@ export default Award;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
   margin: 12px 0;
+`;
+
+const CardWrapper = styled.div`
+  border-style: solid;
+  border-width: 2px 0px 0px 0px;
+  border-color: #1e1f20;
+
+  margin: 30px 0px;
+  padding: 0px 0px 16px 0px;
 `;

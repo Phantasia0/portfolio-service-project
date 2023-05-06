@@ -2,13 +2,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import useInput from 'hooks/useInput';
 import DatePicker from 'react-datepicker';
 import { addCertificate } from 'modules/sagas/certificate';
 
 import { useDispatch } from 'react-redux';
+
+import 'lib/styles/certificate/CertificateAddForm.css';
 
 const CertificateAddForm = ({ setVisible, portfolioOwnerId }) => {
   const dispatch = useDispatch();
@@ -37,20 +39,12 @@ const CertificateAddForm = ({ setVisible, portfolioOwnerId }) => {
   return (
     <Form
       onSubmit={onSubmitForm}
-      controlid="formCertificate"
+      id="formCertificate"
       style={{ marginLeft: '0px' }}
     >
-      <Form.Group controlid="formAgency" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
-          type="text"
-          placeholder="발급기관 입력해 주세요."
-          value={agency}
-          onChange={onChangeAgency}
-        />
-      </Form.Group>
-
-      <Form.Group controlid="formCredit" style={{ marginBottom: '12px' }}>
-        <Form.Control
+          id="formCredit"
           type="text"
           placeholder="자격증명을 입력해 주세요."
           value={credit}
@@ -58,8 +52,9 @@ const CertificateAddForm = ({ setVisible, portfolioOwnerId }) => {
         />
       </Form.Group>
 
-      <Form.Group controlid="formGrade" style={{ marginBottom: '12px' }}>
+      <Form.Group style={{ marginBottom: '12px' }}>
         <Form.Control
+          id="formGrade"
           type="text"
           placeholder="등급 및 점수를 입력해 주세요."
           value={grade}
@@ -67,21 +62,47 @@ const CertificateAddForm = ({ setVisible, portfolioOwnerId }) => {
         />
       </Form.Group>
 
-      <Form.Group controlid="formAquireDate" style={{ marginBottom: '12px' }}>
-        <DatePicker
-          dateFormat="yyyy년 MM월 dd일"
-          dateFormatCalendar="yyyy년 MM월"
-          selected={acquireDate}
-          onChange={(date) => onChangeAcquireDate(date)}
-          withPortal
-        />
+      <Form.Group style={{ marginBottom: '12px' }}>
+        <Row>
+          <Col sm="auto" style={{ paddingTop: '8px' }}>
+            <p id="pCertificateAgency">발급기관</p>
+          </Col>
+          <Col>
+            <Form.Control
+              id="formAgency"
+              type="text"
+              placeholder="발급기관 입력해 주세요."
+              value={agency}
+              onChange={onChangeAgency}
+            />
+          </Col>
+          <Col sm="auto" style={{ paddingTop: '8px' }}>
+            <p id="pAcquireDate">취득일자</p>
+          </Col>
+          <Col>
+            <DatePicker
+              id="formAquireDate"
+              dateFormat="yyyy년 MM월 dd일"
+              dateFormatCalendar="yyyy년 MM월"
+              selected={acquireDate}
+              onChange={(date) => onChangeAcquireDate(date)}
+              withPortal
+            />
+          </Col>
+        </Row>
       </Form.Group>
 
       <ButtonWrapper>
-        <Button variant="primary" type="submit" style={{ marginRight: '4px' }}>
+        <Button
+          id="btnCertificateConfirm"
+          variant="primary"
+          type="submit"
+          style={{ marginRight: '4px' }}
+        >
           확인
         </Button>
         <Button
+          id="btnCertificateCancel"
           variant="secondary"
           onClick={onClick}
           style={{ marginLeft: '4px' }}
@@ -98,4 +119,6 @@ export default CertificateAddForm;
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+
+  margin: 32px 0;
 `;

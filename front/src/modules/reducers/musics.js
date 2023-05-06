@@ -25,7 +25,7 @@ const musics = handleActions(
     [LOAD_MUSICS_SUCCESS]: (state, action) =>
       produce(state, (draft) => {
         draft.musics = action.payload;
-        draft.loadError = null;
+        draft.loadMusicListError = null;
       }),
     [LOAD_MUSICS_FAILURE]: (state, action) =>
       produce(state, (draft) => {
