@@ -144,3 +144,20 @@ export const addMusicSong = (data) => {
     'Music',
   );
 };
+
+// story API
+export const getStoryList = (portfolioOwnerId) =>
+  API.get('mystory', portfolioOwnerId);
+export const getStoryCover = ({ storyID, idx }) =>
+  client.get(`mystory/story/${storyID}?order=${idx}`);
+export const addStoryCover = (data) => {
+  const userId = data.get('userId');
+  const description = data.get('description');
+  const storyFile = data.get('storyFile');
+
+  return API.post(
+    `mystory/${userId}`,
+    { userId, description, storyFile },
+    'Story',
+  );
+};

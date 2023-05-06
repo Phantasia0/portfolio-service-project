@@ -14,6 +14,8 @@ import Project from './project/Project';
 import Music from './music/Music';
 import MusicPanel from './musicPanel/MusicPanel';
 import BackgroundCover from './BackgroundCover';
+import PhotoPanel from './storyPanel/PhotoPanel';
+import StorySlick from './story/StorySlick';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -81,6 +83,13 @@ const Portfolio = () => {
                 portfolioOwnerId={fetchUser.id}
                 isEditable={fetchUser.id === user?.id}
               />
+              <PhotoPanel
+                portfolioOwnerId={fetchUser.id}
+                isEditable={fetchUser.id === user?.id}
+              />
+            </Col>
+            <Col>
+              <StorySlick portfolioOwnerId={fetchUser.id} />
             </Col>
           </Row>
         </Container>

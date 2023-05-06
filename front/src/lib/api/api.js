@@ -41,6 +41,27 @@ export const post = async (endpoint, data, type = null) => {
     });
   }
 
+  if (type === 'Story') {
+    const formData = new FormData();
+    formData.append('userId', data.userId);
+    formData.append('description', data.description);
+    formData.append('story', data.storyFile);
+
+    console.log(data);
+    console.log(`%cPOST 요청: ${serverUrl + endpoint}`, 'color: #296aba;');
+    console.log('POST 요청 데이터:');
+    for (const [name, value] of formData.entries()) {
+      console.log(`${name}: ${value}`);
+    }
+
+    return client.post(endpoint, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    });
+  }
+
   console.log(`%cPOST 요청: ${serverUrl + endpoint}`, 'color: #296aba;');
   console.log(`%cPOST 요청 데이터: ${bodyData}`, 'color: #296aba;');
 
